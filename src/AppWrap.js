@@ -1,5 +1,5 @@
 import React from "react"
-import "./main.scss"
+import "./App.scss"
 import THREECanvas from "./Components/THREECanvas"
 import UserInterface from "./Components/UI/UserInterface"
 

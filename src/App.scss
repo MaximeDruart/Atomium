@@ -24,15 +24,8 @@ html {
 .container {
   width: 100vw;
   height: 100vh;
-  overflow: scroll;
+  // overflow: scroll; si on veut faire du scroll
   position: relative;
-
-  .canvasContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -10;
-  }
 
   .background {
     position: fixed;
@@ -42,20 +35,16 @@ html {
     height: 100vh;
   }
 
-  .ui {
-    header {
-      width: 100vw;
-      height: 10vh;
-      border: 1px solid red;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
+  .canvasContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -10;
   }
 
   .content {
     width: 100vw;
-    height: 300vh; // test value
+    // height: 300vh; // test value
     border: 1px solid yellow;
   }
 }

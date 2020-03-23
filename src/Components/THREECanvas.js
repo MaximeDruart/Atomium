@@ -6,6 +6,7 @@ const THREECanvas = () => {
   const { updateContext, ...context } = useContext(Context)
   const $canvas = useRef(null)
 
+  // threejs scene
   useEffect(() => {
     var scene = new THREE.Scene()
 
@@ -14,8 +15,7 @@ const THREECanvas = () => {
     var renderer = new THREE.WebGLRenderer({ alpha: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setClearAlpha(0)
-    // document.body.appendChild( renderer.domElement );
-    // use ref as a mount point of the Three.js scene instead of the document.body
+
     $canvas.current.appendChild(renderer.domElement)
 
     var geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -32,6 +32,15 @@ const THREECanvas = () => {
       requestAnimationFrame(animate)
     }
     animate()
+
+    const resizeHandler = () => {
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(window.innerWidth, window.innerHeight)
+    }
+
+    window.addEventListener("resize", resizeHandler)
+    return () => window.removeEventListener("resize", resizeHandler)
   }, [])
 
   return <div className="canvasContainer" ref={$canvas}></div>
