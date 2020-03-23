@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useRef } from "react"
 import { Context } from "../Context"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import Molecule from "./three/Molecule"
+import Atom from "./three/Atom"
+const mol = new Molecule()
 
 const THREECanvas = () => {
   const { updateContext, ...context } = useContext(Context)
@@ -14,42 +17,22 @@ const THREECanvas = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 50)
     camera.position.z = 8
 
-    // Objects
-    const atomSize = 5
+    /**
+     * Objects
+     */
 
-    let sphereGeometry = new THREE.SphereGeometry(atomSize, 16, 16)
-    let wfMaterial = new THREE.MeshStandardMaterial({
-      wireframe: true,
-      color: 0xa6f9
-    })
-
-    const getLink = (atomSize = 5, segments = 16, mat = wfMaterial) =>
-      new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
-
-    const setLinkCoords = (atom1, atom2, atomLink, atomSize) => {
-      let distanceBetweenAtoms = atom1.position.distanceTo(atom2.position) - atomSize * 2
-      // setting the link to the position of the first atom
-      atomLink.position.copy(atom1.position)
-      // rotating it to look at the 2nd
-      atomLink.lookAt(atom2.position)
-      atomLink.rotateX(Math.PI / 2)
-      // translating it by half its width + the size of an atom
-      atomLink.translateY(distanceBetweenAtoms / 2 + atomSize)
-      // scaling it to fit to the needed distance
-      atomLink.scale.y = distanceBetweenAtoms
-    }
-
-    const atom = new THREE.Mesh(sphereGeometry, wfMaterial)
+    // molecule
+    const atom = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
     atom.position.set(5, -2, 2)
-    const atom2 = new THREE.Mesh(sphereGeometry, wfMaterial)
+    const atom2 = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
     atom2.position.set(-12, 12, -3)
-    const atom3 = new THREE.Mesh(sphereGeometry, wfMaterial)
+    const atom3 = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
     atom3.position.set(-2, 6, 12)
 
-    const atomLink12 = getLink(atomSize)
-    setLinkCoords(atom, atom2, atomLink12, atomSize)
-    const atomLink13 = getLink(atomSize)
-    setLinkCoords(atom, atom3, atomLink13, atomSize)
+    const atomLink12 = mol.getLink(mol.atomSize)
+    mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
+    const atomLink13 = mol.getLink(mol.atomSize)
+    mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
 
     scene.add(atom)
     scene.add(atom2)
@@ -57,12 +40,22 @@ const THREECanvas = () => {
     scene.add(atomLink12)
     scene.add(atomLink13)
 
-    // Lights
+    // atom
+    let fullAtom = new Atom({})
+    let fullAtomGroup = fullAtom.group
+    fullAtomGroup.position.set(-15, -15, -15)
+    scene.add(fullAtomGroup)
+
+    /**
+     * Lights
+     */
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1)
     scene.add(ambientLight)
 
-    // renderer
+    /**
+     * Renderer
+     */
     const renderer = new THREE.WebGLRenderer({ alpha: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
@@ -75,11 +68,16 @@ const THREECanvas = () => {
 
     const animate = function(t) {
       controls.update()
+
       atom.position.x = Math.sin(t / 110) * 2
       atom.position.y = -Math.sin(t / 90) * 2
       atom.position.z = -Math.sin(t / 120) * 2
-      setLinkCoords(atom, atom2, atomLink12, atomSize)
-      setLinkCoords(atom, atom3, atomLink13, atomSize)
+
+      mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
+      mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
+
+      fullAtom.animateElectrons(t)
+
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
     }
