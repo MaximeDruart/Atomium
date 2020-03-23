@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+$sm-breakpoint: 576px;
+$med-breakpoint: 768px;
+$lg-breakpoint: 992px;
+$xlg-breakpoint: 1200px;
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  position: relative;
+
+  .canvasContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -10;
+  }
+
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .ui {
+    header {
+      width: 100vw;
+      height: 10vh;
+      border: 1px solid red;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .content {
+    width: 100vw;
+    height: 300vh; // test value
+    border: 1px solid yellow;
+  }
+}
