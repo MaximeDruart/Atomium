@@ -1,13 +1,45 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../../fonts/quicksand/Quicksand-Light.ttf') format("truetype");
+  font-weight: lighter;
+}
+
+@font-face{
+  font-family: 'Quicksand';
+  src: url('../../fonts/quicksand/Quicksand-Regular.ttf') format('truetype');
+  font-weight: normal;
+}
+
 .ui {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  header {
-    width: 100vw;
-    height: 10vh;
-    border: 1px solid red;
-    position: fixed;
-    top: 0;
-    left: 0;
+  .header{
+    width: 90%; 
+    height: 50px;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .header_logo{
+      height: 80%;
+    }
+
+    .header_links{
+      width: 15%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.3em;
+      
+      a{
+        color: black;
+        text-decoration: none;
+        font-family: 'Quicksand', sans-serif;
+        font-weight: lighter;
+        padding-left: 10%;
+      }
+    }
   }
 }
