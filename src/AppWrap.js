@@ -1,7 +1,7 @@
 import React from "react"
 import "./App.scss"
-import THREECanvas from "./Components/THREECanvas"
-import UserInterface from "./Components/UI/UserInterface"
+import THREECanvas from "./components/THREECanvas"
+import UserInterface from "./components/UI/UserInterface"
 
 const AppWrap = () => {
   return (
