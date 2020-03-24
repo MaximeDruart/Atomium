@@ -4,7 +4,6 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import Molecule from "./three/Molecule"
 import Atom from "./three/Atom"
-const mol = new Molecule()
 
 const THREECanvas = () => {
   const { updateContext, ...context } = useContext(Context)
@@ -14,37 +13,43 @@ const THREECanvas = () => {
   useEffect(() => {
     const scene = new THREE.Scene()
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 50)
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
     camera.position.z = 8
 
     /**
      * Objects
      */
 
+    const mol = new Molecule()
+
     // molecule
     const atom = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
     atom.position.set(5, -2, 2)
     const atom2 = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
-    atom2.position.set(-12, 12, -3)
+    atom2.position.set(-6, 1, -3)
     const atom3 = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
-    atom3.position.set(-2, 6, 12)
+    atom3.position.set(-1, 3, 6)
+
+    const moleculeGroup = new THREE.Group()
+    moleculeGroup.add(atom)
+    moleculeGroup.add(atom2)
+    moleculeGroup.add(atom3)
 
     const atomLink12 = mol.getLink(mol.atomSize)
+    moleculeGroup.add(atomLink12)
     mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
-    const atomLink13 = mol.getLink(mol.atomSize)
-    mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
 
-    scene.add(atom)
-    scene.add(atom2)
-    scene.add(atom3)
-    scene.add(atomLink12)
-    scene.add(atomLink13)
+    const atomLink13 = mol.getLink(mol.atomSize)
+    moleculeGroup.add(atomLink13)
+    mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
+    moleculeGroup.position.set(1, 1, 1)
+
+    scene.add(moleculeGroup)
 
     // atom
     let fullAtom = new Atom({})
     let fullAtomGroup = fullAtom.group
-    fullAtomGroup.position.set(-15, -15, -15)
-    scene.add(fullAtomGroup)
+    // scene.add(fullAtomGroup)
 
     /**
      * Lights
@@ -69,9 +74,9 @@ const THREECanvas = () => {
     const animate = function(t) {
       controls.update()
 
-      atom.position.x = Math.sin(t / 110) * 2
-      atom.position.y = -Math.sin(t / 90) * 2
-      atom.position.z = -Math.sin(t / 120) * 2
+      // atom.position.x = Math.sin(t / 110) * 2
+      // atom.position.y = -Math.sin(t / 90) * 2
+      // atom.position.z = -Math.sin(t / 120) * 2
 
       mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
       mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)

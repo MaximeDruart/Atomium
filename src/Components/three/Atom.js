@@ -7,7 +7,7 @@ const simplex = new SimplexNoise()
 // noyau : protons + neutrons
 // autour gravite les électrons
 export default class Atom {
-  constructor({ protons = 1, neutrons = 1, electrons = 5, atomRadius = 10 }) {
+  constructor({ protons = 1, neutrons = 1, electrons = 5, atomRadius = 6.5 }) {
     this.protons = {
       count: protons,
       size: 1
@@ -31,6 +31,7 @@ export default class Atom {
     })
 
     this.init()
+    this.atomGroup.position.set(0, 0, 0)
   }
 
   map = (n, start1, stop1, start2, stop2) => ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2
