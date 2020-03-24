@@ -9,20 +9,21 @@ const THREECanvas = () => {
   const { updateContext, ...context } = useContext(Context)
   const $canvas = useRef(null)
 
+  const ran = x => Math.random() * x - x / 2
+
   // threejs scene
   useEffect(() => {
     const scene = new THREE.Scene()
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
-    camera.position.z = 8
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.z = 15
 
     /**
      * Objects
      */
 
-    const mol = new Molecule()
-
     // molecule
+    const mol = new Molecule()
     const atom = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
     atom.position.set(5, -2, 2)
     const atom2 = new THREE.Mesh(mol.sphereGeometry, mol.wfMaterial)
@@ -37,19 +38,33 @@ const THREECanvas = () => {
 
     const atomLink12 = mol.getLink(mol.atomSize)
     moleculeGroup.add(atomLink12)
-    mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
-
     const atomLink13 = mol.getLink(mol.atomSize)
     moleculeGroup.add(atomLink13)
-    mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
+
     moleculeGroup.position.set(1, 1, 1)
 
-    scene.add(moleculeGroup)
+    // scene.add(moleculeGroup)
 
-    // atom
-    let fullAtom = new Atom({})
-    let fullAtomGroup = fullAtom.group
+    // SINGLE ATOM
+    // let fullAtom = new Atom({})
+    // let fullAtomGroup = fullAtom.getAtom().group
     // scene.add(fullAtomGroup)
+
+    // BALLS SCENE
+
+    const getAtoms = x => {
+      const atoms = []
+      for (let i = 0; i < x; i++) {
+        let atom = atomInstance.getAtom()
+        i !== 0 && atom.atomGroup.position.set(ran(100), ran(100), ran(100))
+        atoms.push(atom)
+        scene.add(atom.atomGroup)
+      }
+      return atoms
+    }
+
+    const atomInstance = new Atom({})
+    const atoms = getAtoms(50)
 
     /**
      * Lights
@@ -74,14 +89,12 @@ const THREECanvas = () => {
     const animate = function(t) {
       controls.update()
 
-      // atom.position.x = Math.sin(t / 110) * 2
-      // atom.position.y = -Math.sin(t / 90) * 2
-      // atom.position.z = -Math.sin(t / 120) * 2
+      // keeping atom links updated
+      // mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
+      // mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
 
-      mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
-      mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
-
-      fullAtom.animateElectrons(t)
+      // moving around electrons
+      atoms.forEach(atom => atomInstance.animateElectrons(t, atom.electronsGroup))
 
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
