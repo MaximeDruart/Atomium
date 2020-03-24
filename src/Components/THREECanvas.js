@@ -6,7 +6,7 @@ import Molecule from "./three/Molecule"
 import Atom from "./three/Atom"
 import gsap from "gsap"
 import ThreePlugin from "./three/GSAPTHREE"
-// console.log(GSAPTHREE)
+import cubeAlphaMapSource from "../Images/cubeAlphaMap.jpg"
 gsap.registerPlugin(ThreePlugin)
 
 const THREECanvas = () => {
@@ -17,9 +17,18 @@ const THREECanvas = () => {
 
   // threejs scene
   useEffect(() => {
+    const textureLoader = new THREE.TextureLoader()
+    const cubeAlphaMap = textureLoader.load(cubeAlphaMapSource)
+
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+
+    // var axesHelper = new THREE.AxesHelper(5)
+    // scene.add(axesHelper)
+
+    // var gridHelper = new THREE.GridHelper(100, 100)
+    // scene.add(gridHelper)
 
     /**
      * Objects
@@ -48,13 +57,7 @@ const THREECanvas = () => {
 
     // scene.add(moleculeGroup)
 
-    // SINGLE ATOM
-    // let fullAtom = new Atom({})
-    // let fullAtomGroup = fullAtom.getAtom().group
-    // scene.add(fullAtomGroup)
-
     // BALLS SCENE
-
     const getAtoms = x => {
       const atoms = []
       for (let i = 0; i < x; i++) {
@@ -70,15 +73,8 @@ const THREECanvas = () => {
     const atoms = getAtoms(150)
 
     let atomGroups = atoms.map(({ atomGroup }) => {
-      // spawnTl.from(atomGroup, 6, { three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 } })
       return atomGroup
     })
-
-    // var axesHelper = new THREE.AxesHelper(5)
-    // scene.add(axesHelper)
-
-    // var gridHelper = new THREE.GridHelper(100, 100)
-    // scene.add(gridHelper)
 
     camera.position.set(3, 25, 150)
 
@@ -93,7 +89,7 @@ const THREECanvas = () => {
       })
       .addLabel("sync")
       .to(camera.position, { duration: 3.5, x: 0, y: 0, onComplete: () => (spawnEnded = true) }, "sync")
-      .to(camera.position, { z: 10 }, "sync")
+      .to(camera.position, { z: 15 }, "sync")
       .from(camera.rotation, { y: Math.PI / 8, z: -Math.PI / 4 }, "sync")
       .from(
         atomGroups,
@@ -104,6 +100,27 @@ const THREECanvas = () => {
         },
         "sync"
       )
+
+    // spawnTl.play()
+
+    // WIREFRAME CUBE
+    // const cubeGeometry = new THREE.BoxBufferGeometry(10, 10, 10)
+
+    // var edges = new THREE.EdgesGeometry(cubeGeometry, 10)
+    // var line = new THREE.LineSegments(
+    //   edges,
+    //   new THREE.LineDashedMaterial({ color: 0x000000, linewidth: 1, scale: 1, dashSize: 2, gapSize: 8 })
+    //   // new THREE.MeshStandardMaterial({ color: "red", alphaMap: cubeAlphaMap, wireframe: true })
+    // )
+    // line.computeLineDistances()
+    // scene.add(line)
+
+    // scene.add(
+    //   new THREE.Mesh(
+    //     cubeGeometry,
+    //     new THREE.MeshStandardMaterial({ color: 0xb2954d, alphaMap: cubeAlphaMap, wireframe: true })
+    //   )
+    // )
 
     /**
      * Lights
@@ -143,7 +160,6 @@ const THREECanvas = () => {
 
       // camera movements
       // controls.update()
-      // const angle = (Date.now() / 5000) * Math.PI * 2
       if (spawnEnded) {
         camera.position.x = camera.position.x * Math.cos(0.008) + camera.position.z * Math.sin(0.008)
         camera.position.z = camera.position.z * Math.cos(0.008) - camera.position.x * Math.sin(0.008)

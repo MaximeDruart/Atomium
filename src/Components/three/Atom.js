@@ -33,6 +33,9 @@ export default class Atom {
 
     this.wfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
+      // wireframeLinewidth: "",
+      // wireframeLinejoin: "",
+      // wireframeLinecap: "",
       color: 0xa6f9
     })
 
