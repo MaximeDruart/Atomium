@@ -4,6 +4,10 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import Molecule from "./three/Molecule"
 import Atom from "./three/Atom"
+import gsap from "gsap"
+import ThreePlugin from "./three/GSAPTHREE"
+// console.log(GSAPTHREE)
+gsap.registerPlugin(ThreePlugin)
 
 const THREECanvas = () => {
   const { updateContext, ...context } = useContext(Context)
@@ -16,7 +20,6 @@ const THREECanvas = () => {
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    camera.position.z = 15
 
     /**
      * Objects
@@ -63,8 +66,50 @@ const THREECanvas = () => {
       return atoms
     }
 
-    const atomInstance = new Atom({})
-    const atoms = getAtoms(50)
+    const atomInstance = new Atom({ scene, atomRadius: 2 })
+    const atoms = getAtoms(100)
+
+    let atomGroups = atoms.map(({ atomGroup }) => {
+      // spawnTl.from(atomGroup, 6, { three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 } })
+      return atomGroup
+    })
+
+    var axesHelper = new THREE.AxesHelper(5)
+    scene.add(axesHelper)
+
+    // var gridHelper = new THREE.GridHelper(100, 100)
+    // scene.add(gridHelper)
+
+    camera.position.set(3, 25, 150)
+
+    let spawnTl = gsap
+      .timeline({
+        paused: false,
+        onStart: () => {
+          // camera.lookAt(new THREE.Vector3())
+        },
+        defaults: {
+          ease: "Power2.easeOut",
+          duration: 5
+        }
+      })
+      .addLabel("sync")
+      .to(camera.position, { z: 10, x: 0, y: 0 }, "sync")
+      .from(camera.rotation, { y: Math.PI / 8, z: -Math.PI / 4 }, "sync")
+      .from(
+        atomGroups,
+        {
+          duration: 0.6,
+          three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
+          stagger: 0.1
+        },
+        "sync"
+      )
+    // .to(
+    //   camera.position,
+    //   { duration: 5, repeat: -1, x: 10 * Math.cos(Math.PI * 2), z: 10 * Math.sin(Math.PI * 2) },
+    //   "-=3"
+    // )
 
     /**
      * Lights
@@ -82,19 +127,27 @@ const THREECanvas = () => {
     renderer.setClearAlpha(0)
     $canvas.current.appendChild(renderer.domElement)
 
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.enableDamping = true
-    controls.dampingFactor = 0.05
+    // const controls = new OrbitControls(camera, renderer.domElement)
+    // controls.enableDamping = true
+    // controls.dampingFactor = 0.05
 
     const animate = function(t) {
-      controls.update()
+      // controls.update()
 
       // keeping atom links updated
       // mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
       // mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
 
       // moving around electrons
-      atoms.forEach(atom => atomInstance.animateElectrons(t, atom.electronsGroup))
+      atoms.forEach(atom =>
+        atomInstance.animateElectrons(
+          t,
+          atom.atomGroup,
+          atom.electronsGroup,
+          atom.electronTrailsGeometries,
+          atom.electronTrailsMeshes
+        )
+      )
 
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
