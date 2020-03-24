@@ -1,0 +1,16 @@
+$sm-breakpoint: 576px;
+$med-breakpoint: 768px;
+$lg-breakpoint: 992px;
+$xlg-breakpoint: 1200px;
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("./assets/fonts/quicksand/Quicksand-Light.ttf") format("truetype");
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("./assets/fonts/quicksand/Quicksand-Regular.ttf") format("truetype");
+  font-weight: normal;
+}

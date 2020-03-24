@@ -1,10 +1,8 @@
 import React, { useState } from "react"
-import logo from "./../../Images/logo.png"
-
+import logo from "../../assets/images/logo.png"
 
 const Header = () => {
-
-  // Hover header hook 
+  // Hover header hook
   const [hovering1, setHovering1] = useState(false)
   const onMouseEnterHandler1 = event => setHovering1(true)
   const onMouseLeaveHandler1 = event => setHovering1(false)
@@ -21,40 +19,35 @@ const Header = () => {
   const onMouseEnterHandler4 = event => setHovering4(true)
   const onMouseLeaveHandler4 = event => setHovering4(false)
 
-
   // condition ? si vrai : si faux
   return (
     <div className="header">
       <img src={logo} alt="logo" className="header_logo"></img>
       <div className="header_links">
-        <a
+        <span
           onMouseEnter={onMouseEnterHandler1}
           onMouseLeave={onMouseLeaveHandler1}
-          className={hovering1 ? "header_link header_link_hovered" : "header_link"}
-          href="#">
+          className={hovering1 ? "header_link header_link_hovered" : "header_link"}>
           01
-        </a>
-        <a 
+        </span>
+        <span
           onMouseEnter={onMouseEnterHandler2}
           onMouseLeave={onMouseLeaveHandler2}
-          className={hovering2 ? "header_link header_link_hovered" : "header_link"}
-          href="#">
+          className={hovering2 ? "header_link header_link_hovered" : "header_link"}>
           02
-        </a>
-        <a 
+        </span>
+        <span
           onMouseEnter={onMouseEnterHandler3}
           onMouseLeave={onMouseLeaveHandler3}
-          className={hovering3 ? "header_link header_link_hovered" : "header_link"}
-          href="#">
+          className={hovering3 ? "header_link header_link_hovered" : "header_link"}>
           03
-        </a>
-        <a 
+        </span>
+        <span
           onMouseEnter={onMouseEnterHandler4}
           onMouseLeave={onMouseLeaveHandler4}
-          className={hovering4 ? "header_link header_link_hovered" : "header_link"}
-          href="#">
+          className={hovering4 ? "header_link header_link_hovered" : "header_link"}>
           04
-        </a>
+        </span>
       </div>
     </div>
   )

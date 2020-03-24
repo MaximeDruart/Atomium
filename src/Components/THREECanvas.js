@@ -6,7 +6,7 @@ import Molecule from "./three/Molecule"
 import Atom from "./three/Atom"
 import gsap from "gsap"
 import ThreePlugin from "./three/GSAPTHREE"
-import cubeAlphaMapSource from "../Images/cubeAlphaMap.jpg"
+import cubeAlphaMapSource from "../assets/images/cubeAlphaMap.jpg"
 gsap.registerPlugin(ThreePlugin)
 
 const THREECanvas = () => {
