@@ -129,6 +129,11 @@ const THREECanvas = () => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1)
     scene.add(ambientLight)
 
+    const additionalLight = new THREE.DirectionalLight(0xB4974F, 1)
+    additionalLight.position.set(2, 2, 2)
+    scene.add(additionalLight)
+
+
     /**
      * Renderer
      */
