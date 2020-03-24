@@ -24,7 +24,7 @@ export default class Atom {
     this.atomRadius = atomRadius
     // 7 is a randome value
     this.coreRadius = atomRadius / 7
-    this.geoSegments = 4
+    this.geoSegments = 16
 
     this.protonsGeometry = new THREE.SphereGeometry(this.protons.size, this.geoSegments, this.geoSegments)
     this.neutronsGeometry = new THREE.SphereGeometry(this.neutrons.size, this.geoSegments, this.geoSegments)
@@ -50,7 +50,6 @@ export default class Atom {
     })
 
     this.trailMaterial = new THREE.PointsMaterial({ color: 0xa6f9, size: 0.5 })
-
     this.displayTrail = false
   }
 

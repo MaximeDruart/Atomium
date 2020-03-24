@@ -59,7 +59,7 @@ const THREECanvas = () => {
       const atoms = []
       for (let i = 0; i < x; i++) {
         let atom = atomInstance.getAtom()
-        i !== 0 && atom.atomGroup.position.set(ran(100), ran(100), ran(100))
+        i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
         atoms.push(atom)
         scene.add(atom.atomGroup)
       }
@@ -67,49 +67,43 @@ const THREECanvas = () => {
     }
 
     const atomInstance = new Atom({ scene, atomRadius: 2 })
-    const atoms = getAtoms(100)
+    const atoms = getAtoms(150)
 
     let atomGroups = atoms.map(({ atomGroup }) => {
       // spawnTl.from(atomGroup, 6, { three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 } })
       return atomGroup
     })
 
-    var axesHelper = new THREE.AxesHelper(5)
-    scene.add(axesHelper)
+    // var axesHelper = new THREE.AxesHelper(5)
+    // scene.add(axesHelper)
 
     // var gridHelper = new THREE.GridHelper(100, 100)
     // scene.add(gridHelper)
 
     camera.position.set(3, 25, 150)
 
+    let spawnEnded = false
     let spawnTl = gsap
       .timeline({
         paused: false,
-        onStart: () => {
-          // camera.lookAt(new THREE.Vector3())
-        },
         defaults: {
           ease: "Power2.easeOut",
-          duration: 5
+          duration: 4
         }
       })
       .addLabel("sync")
-      .to(camera.position, { z: 10, x: 0, y: 0 }, "sync")
+      .to(camera.position, { duration: 3.5, x: 0, y: 0, onComplete: () => (spawnEnded = true) }, "sync")
+      .to(camera.position, { z: 10 }, "sync")
       .from(camera.rotation, { y: Math.PI / 8, z: -Math.PI / 4 }, "sync")
       .from(
         atomGroups,
         {
           duration: 0.6,
           three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
-          stagger: 0.1
+          stagger: 0.07
         },
         "sync"
       )
-    // .to(
-    //   camera.position,
-    //   { duration: 5, repeat: -1, x: 10 * Math.cos(Math.PI * 2), z: 10 * Math.sin(Math.PI * 2) },
-    //   "-=3"
-    // )
 
     /**
      * Lights
@@ -132,8 +126,6 @@ const THREECanvas = () => {
     // controls.dampingFactor = 0.05
 
     const animate = function(t) {
-      // controls.update()
-
       // keeping atom links updated
       // mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
       // mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
@@ -149,6 +141,14 @@ const THREECanvas = () => {
         )
       )
 
+      // camera movements
+      // controls.update()
+      // const angle = (Date.now() / 5000) * Math.PI * 2
+      if (spawnEnded) {
+        camera.position.x = camera.position.x * Math.cos(0.008) + camera.position.z * Math.sin(0.008)
+        camera.position.z = camera.position.z * Math.cos(0.008) - camera.position.x * Math.sin(0.008)
+        camera.lookAt(scene.position)
+      }
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
     }
