@@ -24,6 +24,10 @@ const THREECanvas = () => {
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    // using an object so it can be tweened
+    let rotateSpeed = {
+      value: 0.008
+    }
 
     // var axesHelper = new THREE.AxesHelper(5)
     // scene.add(axesHelper)
@@ -59,24 +63,33 @@ const THREECanvas = () => {
     // scene.add(moleculeGroup)
 
     // BALLS SCENE
+    let atomsSceneGroup = new THREE.Group()
     const getAtoms = x => {
       const atoms = []
       for (let i = 0; i < x; i++) {
-        let atom = atomInstance.getAtom()
-        // i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
-        atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        let elecCharge = Math.floor(Math.random() * 5) + 1
+        let atom = new Atom({
+          scene,
+          atomRadius: 2,
+          neutrons: Math.floor(Math.random() * 3) + 1,
+          protons: elecCharge,
+          electrons: elecCharge
+        }).getAtom()
+        i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        // atom.atomGroup.position.set(ran(100), ran(70), ran(100))
         atoms.push(atom)
-        scene.add(atom.atomGroup)
+        atomsSceneGroup.add(atom.atomGroup)
       }
       return atoms
     }
 
-    const atomInstance = new Atom({ scene, atomRadius: 2 })
+    scene.add(atomsSceneGroup)
+
+    const atomInstance = new Atom({ scene })
     const atoms = getAtoms(150)
 
-    let atomGroups = atoms.map(({ atomGroup }) => {
-      return atomGroup
-    })
+    let atomGroups = atoms.map(({ atomGroup }) => atomGroup)
+    let atomGroupsButFirst = atomGroups.slice(1)
 
     camera.position.set(3, 25, 150)
 
@@ -103,9 +116,9 @@ const THREECanvas = () => {
         "sync"
       )
 
-    let firstAtomPos = atoms[0].atomGroup.position
+    // let firstAtomPos = atoms[0].atomGroup.position.matrixWorld
+    let firstAtomPos = new THREE.Vector3().setFromMatrixPosition(atoms[0].atomGroup.matrixWorld)
 
-    console.log(firstAtomPos)
     let goToSecondTl = gsap
       .timeline({
         paused: true,
@@ -115,10 +128,35 @@ const THREECanvas = () => {
         },
         onStart: () => {
           camera.lookAt(firstAtomPos)
+          rotateCamera = false
+          introSpawnTl.kill()
+        },
+        onComplete: () => {
+          atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
         }
       })
       .addLabel("sync")
-      .to(camera.position, 2, { x: firstAtomPos.x, y: firstAtomPos.y, z: firstAtomPos.z - 10 })
+      .to(
+        atomGroupsButFirst,
+        {
+          duration: 0.5,
+          three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
+          stagger: 0.01
+        },
+        "sync"
+      )
+      .to(
+        camera.position,
+        {
+          duration: 2,
+          onUpdate: () => camera.lookAt(scene.position),
+          x: firstAtomPos.x,
+          y: firstAtomPos.y,
+          z: firstAtomPos.z - 8
+        },
+        "sync"
+      )
+      .to(rotateSpeed, { value: 0 }, "sync")
 
     updateContext("introSpawnTl", introSpawnTl)
     updateContext("goToSecondTl", goToSecondTl)
@@ -185,8 +223,10 @@ const THREECanvas = () => {
       // camera movements
       // controls.update()
       if (rotateCamera) {
-        camera.position.x = camera.position.x * Math.cos(0.008) + camera.position.z * Math.sin(0.008)
-        camera.position.z = camera.position.z * Math.cos(0.008) - camera.position.x * Math.sin(0.008)
+        camera.position.x =
+          camera.position.x * Math.cos(rotateSpeed.value) + camera.position.z * Math.sin(rotateSpeed.value)
+        camera.position.z =
+          camera.position.z * Math.cos(rotateSpeed.value) - camera.position.x * Math.sin(rotateSpeed.value)
         camera.lookAt(scene.position)
       }
       renderer.render(scene, camera)

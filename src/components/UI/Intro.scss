@@ -36,4 +36,10 @@
       }
     }
   }
+  .skip-button {
+    position: absolute;
+    top: 88%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

@@ -7,7 +7,7 @@ const simplex = new SimplexNoise()
 // noyau : protons + neutrons
 // autour gravite les électrons
 export default class Atom {
-  constructor({ scene, protons = 3, neutrons = 3, electrons = 5, atomRadius = 6 }) {
+  constructor({ scene, protons = 3, neutrons = 3, electrons = 5, atomRadius = 6, displayTrail = false }) {
     this.scene = scene
     this.protons = {
       count: protons,
@@ -53,7 +53,7 @@ export default class Atom {
     })
 
     this.trailMaterial = new THREE.PointsMaterial({ color: 0xa6f9, size: 0.5 })
-    this.displayTrail = false
+    this.displayTrail = displayTrail
   }
 
   static wfMaterial = new THREE.MeshStandardMaterial({
@@ -148,7 +148,7 @@ export default class Atom {
         // elecTrailsMeshes.children[index].geometry.dynamic = true
         // elecTrailsMeshes.children[index].geometry = elecTrailsGeos[index]
         // elecTrailsMeshes.children[index].geometry.verticesNeedUpdate = true
-        // console.log(elecTrailsMeshes.children[index].geometry)
+        console.log(elecTrailsMeshes.children[index].geometry)
       })
       atomGroup.add(elecTrailsMeshes)
     }

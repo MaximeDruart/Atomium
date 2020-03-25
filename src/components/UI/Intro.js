@@ -46,18 +46,20 @@ const Intro = props => {
   }
 
   const goToNext = () => {
-    let goToNextTl = gsap
+    gsap
       .timeline({
         defaults: {
           ease: "Power3.easeInOut",
           duration: 1
-        }
+        },
+        onStart: () => goToSecondTl.play()
       })
       .addLabel("sync")
+      .to($introContainer.current, { opacity: 0, duration: 1, ease: "Power3.easeInOut" })
   }
 
+  // playing the atom spawns timeline on mount
   useEffect(() => {
-    // playing the atom spawns timeline on mount
     const spawnText = () =>
       setTimeout(() => {
         gsap.timeline().to($introContainer.current, 1, { ease: "Power3.easeInOut", opacity: 1 })
@@ -80,15 +82,13 @@ const Intro = props => {
   )
 
   return (
-    <div
-      // onClick={() => goToSecondTl.play()}
-      onWheel={wheelHandler}
-      ref={$introContainer}
-      style={{ opacity: 0 }}
-      className="intro-container">
+    <div onWheel={wheelHandler} ref={$introContainer} style={{ opacity: 0 }} className="intro-container">
       <div className="number">01</div>
       <div ref={$textContainer} className="text-container">
         {getMappedTexts()}
+      </div>
+      <div onClick={goToNext} className="skip-button button">
+        SKIP INTRO
       </div>
     </div>
   )
