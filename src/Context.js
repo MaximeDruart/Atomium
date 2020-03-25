@@ -5,8 +5,11 @@ export const Context = createContext()
 class ContextProvider extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
-    this.activePage = 1
+    this.state = {
+      activeScene: 0,
+      activeScene2Atom: 0,
+      activeScene3Molecule: 0
+    }
   }
 
   updateContext = (property, value, cb = () => {}) => this.setState({ [property]: value }, cb())
