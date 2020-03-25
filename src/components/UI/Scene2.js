@@ -7,7 +7,7 @@ import gsap from "gsap"
 
 const Scene2 = () => {
   const $scene2 = useRef(null)
-  const { updateContext, activeScene2Atom, switchAtom, $background, $canvas } = useContext(Context)
+  const { updateContext, activeScene2Atom, switchAtom, clearAtomsAnimated, $background, $canvas } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -32,6 +32,7 @@ const Scene2 = () => {
   const goToScene3 = () => {
     gsap.to($scene2.current, 0.8, {
       opacity: 0,
+      onStart: () => clearAtomsAnimated(),
       onComplete: () => {
         updateContext("activeScene", 2)
       }

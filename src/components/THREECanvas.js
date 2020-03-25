@@ -211,6 +211,25 @@ const THREECanvas = () => {
       })
     }
 
+    const clearAtomsAnimated = () => {
+      let atomGrps = atoms.map(({ atomGroup }) => atomGroup)
+      gsap.to(cubeMesh, 0.8, { ease: "Power3.easeInOut", three: { scaleX: 0, scaleY: 0, scaleZ: 0 } })
+      gsap.to(atomGrps, 0.8, {
+        ease: "Power3.easeInOut",
+        three: { scaleX: 0, scaleY: 0, scaleZ: 0 },
+        onComplete: () => {
+          scene.remove(cubeMesh)
+          atoms.forEach(atom => scene.remove(atom.atomGroup))
+        }
+      })
+    }
+
+    const clearSceneOfGroups = () => {
+      scene.children.forEach((children, index, scene) => {
+        children.children.length > 0 && scene.remove(children)
+      })
+    }
+
     // transition between second and third where two atoms link together by switching electrons. would take too much time right now.
     const secondToThirdTl = gsap.timeline({
       paused: true,
@@ -228,6 +247,7 @@ const THREECanvas = () => {
     updateContext("introSpawnTl", introSpawnTl)
     updateContext("goToSecondTl", goToSecondTl)
     updateContext("secondToThirdTl", secondToThirdTl)
+    updateContext("clearAtomsAnimated", clearAtomsAnimated)
     /**
      * Lights
      */
