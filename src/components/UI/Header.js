@@ -6,11 +6,11 @@ const Header = () => {
   const { activeScene } = useContext(Context)
   const getLinks = useCallback(
     () =>
-      new Array(4)
-        .fill(0)
-        .map((_, index) => (
-          <span className={activeScene === index ? "header_link active" : "header_link"}>0{index + 1}</span>
-        )),
+      new Array(4).fill(0).map((_, index) => (
+        <span key={index} className={activeScene === index ? "header_link active" : "header_link"}>
+          0{index + 1}
+        </span>
+      )),
     [activeScene]
   )
   return (

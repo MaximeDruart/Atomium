@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef } from "react"
-import { Context } from "../Context"
 import * as THREE from "three"
 import { OrbitControls as ABSOLUTELYNOTORBITCONTROLS } from "three/examples/jsm/controls/OrbitControls.js"
-import Molecule from "./three/Molecule"
-import Atom from "./three/Atom"
 import gsap from "gsap"
 import ThreePlugin from "./three/GSAPTHREE"
 import cubeAlphaMapSource from "../assets/images/cubeAlphaMap.jpg"
+import { Context } from "../Context"
+import Molecule from "./three/Molecule"
+import Atom from "./three/Atom"
+import scene3data from "./UI/Scene3data"
 gsap.registerPlugin(ThreePlugin)
 
 const THREECanvas = () => {
@@ -61,7 +62,40 @@ const THREECanvas = () => {
 
     moleculeGroup.position.set(1, 1, 1)
 
-    // scene.add(moleculeGroup)
+    let molecules = []
+    const switchMolecule = molecule => {
+      console.log(molecule, molecules)
+      let switchMolTl = gsap.timeline({
+        defaults: { duration: 0.4 }
+      })
+      molecules.length > 0 &&
+        switchMolTl.to(molecules[molecules.length - 1].group.scale, {
+          ease: "Power3.easeIn",
+          x: 0.01,
+          y: 0.01,
+          z: 0.01,
+          onComplete: () => {
+            scene.remove(molecules[molecules.length - 1].group)
+            molecules.pop()
+          }
+        })
+      switchMolTl.from(molecule.group.scale, 0.4, {
+        onStart: () => {
+          // console.log(molecule)
+          molecule.links.forEach((link, index) => {
+            mol.setLinkCoords(molecule.atoms[link.origin], molecule.atoms[link.origin], link.mesh, mol.atomSize)
+          })
+          scene.add(molecule.group)
+          molecules.push(molecule)
+        },
+        ease: "Power3.easeOut",
+        x: 0.01,
+        y: 0.01,
+        z: 0.01
+      })
+    }
+    // molecules.push(scene3data[0].molecule)
+    // scene.add(scene3data[0].molecule.group)
 
     // BALLS SCENE
     let atomsSceneGroup = new THREE.Group()
@@ -213,12 +247,12 @@ const THREECanvas = () => {
 
     const clearAtomsAnimated = () => {
       let atomGrps = atoms.map(({ atomGroup }) => atomGroup)
-      gsap.to(cubeMesh, 0.8, { ease: "Power3.easeInOut", three: { scaleX: 0, scaleY: 0, scaleZ: 0 } })
+      // gsap.to(cubeMesh, 0.8, { ease: "Power3.easeInOut", three: { scaleX: 0, scaleY: 0, scaleZ: 0 } })
       gsap.to(atomGrps, 0.8, {
         ease: "Power3.easeInOut",
-        three: { scaleX: 0, scaleY: 0, scaleZ: 0 },
+        three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
         onComplete: () => {
-          scene.remove(cubeMesh)
+          // scene.remove(cubeMesh)
           atoms.forEach(atom => scene.remove(atom.atomGroup))
         }
       })
@@ -248,6 +282,7 @@ const THREECanvas = () => {
     updateContext("goToSecondTl", goToSecondTl)
     updateContext("secondToThirdTl", secondToThirdTl)
     updateContext("clearAtomsAnimated", clearAtomsAnimated)
+    updateContext("switchMolecule", switchMolecule)
     /**
      * Lights
      */
@@ -271,9 +306,11 @@ const THREECanvas = () => {
     let controls
 
     const animate = function(t) {
-      // keeping atom links updated
-      // mol.setLinkCoords(atom, atom2, atomLink12, mol.atomSize)
-      // mol.setLinkCoords(atom, atom3, atomLink13, mol.atomSize)
+      molecules.forEach(molecule => {
+        molecule.links.forEach(link => {
+          mol.setLinkCoords(molecule.atoms[link.origin], molecule.atoms[link.end], link.mesh, mol.atomSize)
+        })
+      })
 
       // moving around electrons
       atoms.forEach(atom =>

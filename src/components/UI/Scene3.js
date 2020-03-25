@@ -18,7 +18,7 @@ const Scene3 = () => {
   }
 
   useEffect(() => {
-    !isFirstRender && switchMolecule(scene3data[activeScene3Molecule].structure)
+    switchMolecule(scene3data[activeScene3Molecule].molecule)
     setActiveDescription(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeScene3Molecule])

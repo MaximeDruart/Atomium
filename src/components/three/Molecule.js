@@ -1,8 +1,8 @@
 import * as THREE from "three"
 
 export default class Molecule {
-  constructor() {
-    this.atomSize = 2
+  constructor(atomSize = 2) {
+    this.atomSize = atomSize
     this.sphereGeometry = new THREE.SphereGeometry(this.atomSize, 16, 16)
     this.wfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
@@ -10,7 +10,32 @@ export default class Molecule {
     })
   }
 
-  getLink = (atomSize = 5, segments = 16, mat = this.wfMaterial) =>
+  getMolecule = (atomsArray, linksArray) => {
+    const group = new THREE.Group()
+    const atoms = atomsArray.map(atom => {
+      const atomMesh = this.getAtom(atom)
+      group.add(atomMesh)
+      return atomMesh
+    })
+    const links = linksArray.map(link => {
+      const linkMesh = this.getLink(this.atomSize)
+      group.add(linkMesh)
+      return {
+        origin: link.origin,
+        end: link.end,
+        mesh: linkMesh
+      }
+    })
+
+    return {
+      // id : THREE.
+      group,
+      atoms,
+      links
+    }
+  }
+
+  getLink = (atomSize = 2, segments = 16, mat = this.wfMaterial) =>
     new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
 
   setLinkCoords = (atom1, atom2, atomLink, atomSize) => {
@@ -29,5 +54,9 @@ export default class Molecule {
     atomLink.scale.y = distanceBetweenAtoms
   }
 
-  createMolecule = (...atoms) => {}
+  getAtom = ({ x, y, z }) => {
+    const mesh = new THREE.Mesh(this.sphereGeometry, this.wfMaterial)
+    mesh.position.set(x, y, z)
+    return mesh
+  }
 }
