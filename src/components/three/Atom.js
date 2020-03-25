@@ -88,17 +88,20 @@ export default class Atom {
     }
 
     for (let i = 0; i < this.electrons.count; i++) {
+      const electronPivotPoint = new THREE.Group()
       const electron = new THREE.Mesh(this.electronsGeometry, this.wfMaterial)
       // rotating the electron to a random value
       electron.rotation.set(this.ran(Math.PI * 2), this.ran(Math.PI * 2), this.ran(Math.PI * 2))
       // then translating it (which axis doesn't matter) by radius to ensure that it always starts on the edge
       electron.translateX(this.atomRadius * 0.8)
-      electronsGroup.add(electron)
-      let trailGeometry = new THREE.Geometry()
-      trailGeometry.vertices.push(new THREE.Vector3(electron.position.x, electron.position.y, electron.position.z))
+      electronPivotPoint.add(electron)
+      electronsGroup.add(electronPivotPoint)
 
-      electronTrailsGeometries.push(trailGeometry)
-      electronTrailsMeshes.add(new THREE.Points(trailGeometry, this.trailMaterial))
+      // let trailGeometry = new THREE.Geometry()
+      // trailGeometry.vertices.push(new THREE.Vector3(electron.position.x, electron.position.y, electron.position.z))
+
+      // electronTrailsGeometries.push(trailGeometry)
+      // electronTrailsMeshes.add(new THREE.Points(trailGeometry, this.trailMaterial))
     }
     const atomOuterShell = new THREE.Mesh(this.atomOuterShellGeometry, this.transparentWfMaterial)
 
@@ -121,29 +124,13 @@ export default class Atom {
 
   animateElectrons = (time, atomGroup, elecGroup, elecTrailsGeos, elecTrailsMeshes) => {
     // rotating the whole group. it feels kinda natural if the number of electrons is small.
-    elecGroup.rotation.set(time / 160, time / 240, time / 320)
+    elecGroup.children.forEach((pivot, index) => {
+      pivot.rotation.set(time / 160 + index * 10, time / 240 + index * 10, time / 320 + index * 10)
+    })
 
     // adding it a little noise to the scale to make it change more naturally
     let scale = this.map(simplex.noise2D(time / 2000, 0), -1, 1, 0.95, 1.1)
     elecGroup.scale.set(scale, scale, scale)
-
-    function rotateAboutPoint(obj, point, axis, theta, pointIsWorld) {
-      pointIsWorld = pointIsWorld === undefined ? false : pointIsWorld
-
-      if (pointIsWorld) {
-        obj.parent.localToWorld(obj.position) // compensate for world coordinate
-      }
-
-      obj.position.sub(point) // remove the offset
-      obj.position.applyAxisAngle(axis, theta) // rotate the POSITION
-      obj.position.add(point) // re-add the offset
-
-      if (pointIsWorld) {
-        obj.parent.worldToLocal(obj.position) // undo world coordinates compensation
-      }
-
-      obj.rotateOnAxis(axis, theta) // rotate the OBJECT
-    }
 
     if (this.displayTrail) {
       // for each electron
