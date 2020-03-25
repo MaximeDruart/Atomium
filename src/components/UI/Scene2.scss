@@ -1,0 +1,19 @@
+@import "../../utils.scss";
+
+.scene-2 {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  .title {
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .molecule-name {
+  }
+
+  .description {
+  }
+}
