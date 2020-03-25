@@ -24,7 +24,7 @@ export default class Atom {
     this.atomRadius = atomRadius
     // 7 is a randome value
     this.coreRadius = atomRadius / 7
-    this.geoSegments = 16
+    this.geoSegments = 8
 
     this.protonsGeometry = new THREE.SphereGeometry(this.protons.size, this.geoSegments, this.geoSegments)
     this.neutronsGeometry = new THREE.SphereGeometry(this.neutrons.size, this.geoSegments, this.geoSegments)
@@ -36,18 +36,18 @@ export default class Atom {
       // wireframeLinewidth: "",
       // wireframeLinejoin: "",
       // wireframeLinecap: "",
-      color: 0xa6f9
+      color: 0x000000
     })
 
     this.redWfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
-      color: 0xff0000
+      color: 0x888888
     })
 
     this.transparentWfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
       transparent: true,
-      color: 0xa6f9,
+      color: 0x666666,
       opacity: 0.1,
       side: THREE.DoubleSide
     })
