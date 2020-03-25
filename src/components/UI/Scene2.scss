@@ -4,6 +4,9 @@
   width: 100vw;
   height: 100vh;
   position: relative;
+  * {
+    font-family: "Quicksand-normal";
+  }
   .title {
     position: absolute;
     top: 5vh;
@@ -19,7 +22,7 @@
     margin-top: 0;
   }
 
-  .molecule-name {
+  .atom-name {
     position: absolute;
     top: 80%;
     left: 50%;
@@ -28,9 +31,21 @@
 
   .description {
     position: absolute;
-    top: 80%;
-    left: 50%;
+    top: 50%;
+    left: 20%;
     transform: translateX(-50%);
-    height: 30vw;
+    width: 30vw;
+    border: 1px solid black;
+  }
+
+  .previous-atom,
+  .next-atom {
+    position: absolute;
+    top: 90%;
+    left: 40%;
+    transform: translateX(-50%);
+  }
+  .next-atom {
+    left: 60%;
   }
 }
