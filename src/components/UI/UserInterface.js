@@ -3,6 +3,7 @@ import Header from "./Header"
 import Timeline from "./Timeline"
 import "./UI.scss"
 import Intro from "./Intro"
+import TextAtoms from "./scene2/TextsAtoms.js"
 
 const UserInterface = () => {
   const [activeScene, setActiveScene] = useState()
@@ -11,7 +12,8 @@ const UserInterface = () => {
       <Header />
       <div className="main_container">
         <Intro />
-        {/* <Timeline /> */}
+        <Timeline />
+        <TextAtoms />
       </div>
     </div>
   )
