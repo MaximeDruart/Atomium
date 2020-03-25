@@ -133,6 +133,7 @@ const THREECanvas = () => {
         },
         onComplete: () => {
           atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
+          updateContext("activeScene", 1)
         }
       })
       .addLabel("sync")
