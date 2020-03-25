@@ -8,13 +8,26 @@
     font-family: "Quicksand-normal";
   }
   .title {
+    .number {
+      font-family: "Quicksand-light";
+      position: relative;
+      &::after {
+        position: absolute;
+        background: $gold-color;
+        content: "";
+        width: 80%;
+        height: 1px;
+        top: 100%;
+        left: 0;
+      }
+    }
+    font-family: "Quicksand-light";
     position: absolute;
-    top: 5vh;
+    top: 2vh;
     left: 50%;
     transform: translateX(-50%);
-    color: #b2954d;
-    font-size: 6vh;
-    font-weight: bold;
+    color: $gold-color;
+    font-size: 4vh;
   }
 
   .timeline {
@@ -30,7 +43,7 @@
     top: 80%;
     left: 50%;
     transform: translateX(-50%);
-    color: #b2954d;
+    color: $gold-color;
   }
 
   .description {
@@ -51,7 +64,7 @@
     top: 90%;
     left: 20%;
     transform: translateX(-50%);
-    color: #b2954d;
+    color: $gold-color;
   }
 
   .next {
@@ -59,7 +72,8 @@
     top: 90%;
     left: 50%;
     transform: translateX(-50%);
-    color: #b2954d;
+    color: $gold-color;
+    border-radius: 50%;
     &::after {
       position: absolute;
       content: ">";

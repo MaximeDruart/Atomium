@@ -173,7 +173,7 @@ const THREECanvas = () => {
           onUpdate: () => camera.lookAt(scene.position),
           x: firstAtomPos.x,
           y: firstAtomPos.y,
-          z: firstAtomPos.z - 8
+          z: firstAtomPos.z - 12
         },
         "sync"
       )
