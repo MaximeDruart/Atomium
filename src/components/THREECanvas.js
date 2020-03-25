@@ -199,8 +199,6 @@ const THREECanvas = () => {
           })
         }
       })
-
-      // console.log(scene)
     }
 
     // scene.add(cubeMesh)

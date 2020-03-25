@@ -2,4 +2,8 @@
 
 # THREEJS
 
--Fog on intro
+-INTRO :
+-add fog
+-fix text scrolll
+
+-SCENE 2 :
