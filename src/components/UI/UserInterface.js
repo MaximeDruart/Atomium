@@ -7,7 +7,7 @@ const UserInterface = () => {
   return (
     <div className="ui">
       <Header />
-      <div className="main_container">
+      <div className="main-container">
         <Timeline />
       </div>
     </div>
