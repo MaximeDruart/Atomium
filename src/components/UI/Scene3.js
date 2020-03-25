@@ -13,7 +13,7 @@ const Scene3 = () => {
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   const changeMolecule = val => {
-    let newVal = gsap.utils.clamp(0, 2, activeScene3Molecule + val)
+    let newVal = gsap.utils.clamp(0, scene3data.length - 1, activeScene3Molecule + val)
     newVal !== activeScene3Molecule && updateContext("activeScene3Molecule", newVal)
   }
 

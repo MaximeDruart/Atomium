@@ -31,11 +31,11 @@ const THREECanvas = () => {
       value: 0.008
     }
 
-    // var axesHelper = new THREE.AxesHelper(5)
-    // scene.add(axesHelper)
+    var axesHelper = new THREE.AxesHelper(5)
+    scene.add(axesHelper)
 
-    // var gridHelper = new THREE.GridHelper(100, 100)
-    // scene.add(gridHelper)
+    var gridHelper = new THREE.GridHelper(100, 100)
+    scene.add(gridHelper)
 
     /**
      * Objects
@@ -82,9 +82,6 @@ const THREECanvas = () => {
       switchMolTl.from(molecule.group.scale, 0.4, {
         onStart: () => {
           // console.log(molecule)
-          molecule.links.forEach((link, index) => {
-            mol.setLinkCoords(molecule.atoms[link.origin], molecule.atoms[link.origin], link.mesh, mol.atomSize)
-          })
           scene.add(molecule.group)
           molecules.push(molecule)
         },

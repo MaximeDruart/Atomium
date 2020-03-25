@@ -13,7 +13,7 @@ export default [
       "Au cours de la respiration cellulaire, la molécule de dioxygène sert à brûler les nutriments, et les transforme en molécules de dioxyde de carbone et d'eau durant la dernière étape du processus. De nombreux êtres vivants sont incapables de vivre sans le gaz dioxygène. Seules les plantes sont capables d'en produire : c'est le phénomène de photosynthèse. Il est le comburant obligatoire lors d'une combustion car il est le seul gaz de l'air qui permet les combustions."
     ],
     molecule: mol.getMolecule(
-      [new THREE.Vector3(5, -2, 2), new THREE.Vector3(-6, 1, -3)],
+      [new THREE.Vector3(0, 0, 0), new THREE.Vector3(-6, 1, -3)],
       [
         {
           origin: 0,
@@ -76,6 +76,46 @@ export default [
       "C'est un composé organique, produit par les êtres vivants et le processus de fermentation.Dans les conditions habituelles, c'est un gaz. Il peut être mis sous forme liquide à très basse température ou sous forte pression pour être stocké ou transporté.",
 
       "Le méthane est un gaz à effet de serre à l'impact vingt fois plus puissant que celui du dioxyde de carbone sur la planète.Il est le composant très majoritaire du grisou, redouté pour ses explosions dans les mines.Le méthane présent dans les roches profondes (gisement) est exploité comme énergie appelée gaz naturel. C'est alors une énergie fossile.Le méthane peut aussi être produit par la fermentation de déchets dans des digesteurs : la méthanisation. Dans ce cas, c'est une énergie renouvelable."
-    ]
+    ],
+    // molecule: mol.getMolecule(
+    //   [new THREE.Vector3(5, -2, 2), new THREE.Vector3(-6, 1, -3), new THREE.Vector3(-1, -3, 6)],
+    //   [
+    //     {
+    //       origin: 0,
+    //       end: 1
+    //     },
+    //     {
+    //       origin: 0,
+    //       end: 2
+    //     }
+    //   ]
+    // ),
+    molecule: mol.getMolecule(
+      [
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(-6, 1, -1),
+        new THREE.Vector3(7, -2, 1),
+        new THREE.Vector3(-3, -7, 1),
+        new THREE.Vector3(2, 5, -1)
+      ],
+      [
+        {
+          origin: 0,
+          end: 1
+        },
+        {
+          origin: 0,
+          end: 2
+        },
+        {
+          origin: 0,
+          end: 3
+        },
+        {
+          origin: 0,
+          end: 4
+        }
+      ]
+    )
   }
 ]
