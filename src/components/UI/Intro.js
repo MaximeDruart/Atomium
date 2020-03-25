@@ -32,13 +32,19 @@ const Intro = props => {
 
   const wheelHandler = ({ deltaY }) => {
     setTextIndex(textIndex => {
-      let scrollValue = Math.floor(deltaY / 50) >= 1 ? 1 : Math.floor(deltaY / 50) < 0 ? -1 : 0
+      let scrollValue = Math.floor(deltaY) >= 1 ? 1 : Math.floor(deltaY / 50) < 0 ? -1 : 0
       let newValue = gsap.utils.clamp(0, introTexts.length - 1, textIndex + scrollValue)
       let actualTime = Date.now()
       if (actualTime - timeSinceLastChange > 1000 && scrollValue !== 0) {
+        // setTimeSinceLastChange(Date.now())
+        // textIndex !== newValue &&
+        //   gsap.from($textContainer.current, { duration: 0.9, ease: "Power3.easeInOut", opacity: 0 })
+
         setTimeSinceLastChange(Date.now())
         textIndex !== newValue &&
-          gsap.from($textContainer.current, { duration: 0.9, ease: "Power3.easeInOut", opacity: 0 })
+          gsap.timeline()
+          .fromTo(".intro-container", {opacity: 0}, {opacity: 1, duration: 1});
+
         // textIndex === introTexts.length && goToNext()
         return newValue
       } else return textIndex
@@ -95,3 +101,4 @@ const Intro = props => {
 }
 
 export default Intro
+
