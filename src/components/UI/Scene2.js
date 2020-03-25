@@ -12,7 +12,7 @@ const Scene2 = () => {
       <div className="title">Les 3 grandes molécules</div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="molecule-name">{scene2data[activeScene2Atom].name}</div>
-      <div className="description">{scene2data[activeScene2Atom].description[activeDescription]}</div>
+      <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
     </div>
   )
 }

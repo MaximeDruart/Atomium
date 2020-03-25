@@ -11,9 +11,26 @@
     transform: translateX(-50%);
   }
 
+  .timeline {
+    position: absolute;
+    top: 50%;
+    right: 3vw;
+    transform: translateY(-50%);
+    margin-top: 0;
+  }
+
   .molecule-name {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .description {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 30vw;
   }
 }

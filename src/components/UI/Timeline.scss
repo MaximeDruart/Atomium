@@ -1,11 +1,5 @@
 @import "../../utils.scss";
 
-.main-container {
-  width: 90vw;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .timeline {
   width: 5vw;
   height: 50vh;
@@ -29,6 +23,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
   }
 
   .point {
