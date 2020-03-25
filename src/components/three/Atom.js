@@ -127,6 +127,24 @@ export default class Atom {
     let scale = this.map(simplex.noise2D(time / 2000, 0), -1, 1, 0.95, 1.1)
     elecGroup.scale.set(scale, scale, scale)
 
+    function rotateAboutPoint(obj, point, axis, theta, pointIsWorld) {
+      pointIsWorld = pointIsWorld === undefined ? false : pointIsWorld
+
+      if (pointIsWorld) {
+        obj.parent.localToWorld(obj.position) // compensate for world coordinate
+      }
+
+      obj.position.sub(point) // remove the offset
+      obj.position.applyAxisAngle(axis, theta) // rotate the POSITION
+      obj.position.add(point) // re-add the offset
+
+      if (pointIsWorld) {
+        obj.parent.worldToLocal(obj.position) // undo world coordinates compensation
+      }
+
+      obj.rotateOnAxis(axis, theta) // rotate the OBJECT
+    }
+
     if (this.displayTrail) {
       // for each electron
       // atomGroup.remove(elecTrailsMeshes)

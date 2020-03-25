@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState, useEffect, useRef } from "react"
 import "./Scene2.scss"
 // import "./Scene3.scss"
 import scene3data from "./Scene3data"
@@ -7,6 +7,7 @@ import { Context } from "../../Context"
 import gsap from "gsap"
 
 const Scene3 = () => {
+  const $scene3 = useRef(null)
   const { updateContext, activeScene3Molecule, switchMolecule } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
   const [isFirstRender, setIsFirstRender] = useState(true)
@@ -22,10 +23,13 @@ const Scene3 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeScene3Molecule])
 
-  useEffect(() => setIsFirstRender(false), [])
+  useEffect(() => {
+    setIsFirstRender(false)
+    gsap.from($scene3.current, 0.8, { opacity: 0 })
+  }, [])
 
   return (
-    <div className="scene-2">
+    <div ref={$scene3} className="scene-2">
       <div className="title">Les 3 grandes molécules</div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene3data[activeScene3Molecule].descriptions[activeDescription]}</div>

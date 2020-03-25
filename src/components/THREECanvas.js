@@ -127,7 +127,7 @@ const THREECanvas = () => {
     const cubeMesh = new THREE.Mesh(
       cubeGeometry,
       new THREE.MeshStandardMaterial({
-        // opacity: 0.7,
+        opacity: 0.8,
         side: THREE.DoubleSide,
         color: 0xb2954d,
         alphaMap: cubeAlphaMap,
