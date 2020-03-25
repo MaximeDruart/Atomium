@@ -7,7 +7,7 @@ import gsap from "gsap"
 
 const Scene2 = () => {
   const $scene2 = useRef(null)
-  const { updateContext, activeScene2Atom, switchAtom } = useContext(Context)
+  const { updateContext, activeScene2Atom, switchAtom, $background } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -25,6 +25,7 @@ const Scene2 = () => {
   useEffect(() => {
     setIsFirstRender(false)
     gsap.from($scene2.current, 0.8, { opacity: 0 })
+    gsap.to($background.current, 0.8, { opacity: 0.4 })
   }, [])
 
   const goToScene3 = () => {

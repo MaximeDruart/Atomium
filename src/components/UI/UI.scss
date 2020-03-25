@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 100;
 
     .header_logo {
       height: 40px;
@@ -36,7 +37,18 @@
         text-decoration: none;
         font-family: "Quicksand-light", sans-serif;
         font-weight: lighter;
-        padding-left: 10%;
+        margin-left: 10px;
+        margin-right: 10px;
+        position: relative;
+        &.active::after {
+          content: "";
+          position: absolute;
+          background: $gold-color;
+          width: 80%;
+          height: 1px;
+          top: 100%;
+          left: 0;
+        }
         &:hover {
           cursor: pointer;
           color: $gold-color;

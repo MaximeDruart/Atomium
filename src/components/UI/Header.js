@@ -1,19 +1,22 @@
-import React from "react"
+import React, { useContext, useCallback } from "react"
 import logo from "../../assets/images/logo.png"
+import { Context } from "../../Context"
 
 const Header = () => {
-  // Hover header hook
-
-  // condition ? si vrai : si faux
+  const { activeScene } = useContext(Context)
+  const getLinks = useCallback(
+    () =>
+      new Array(4)
+        .fill(0)
+        .map((_, index) => (
+          <span className={activeScene === index ? "header_link active" : "header_link"}>0{index + 1}</span>
+        )),
+    [activeScene]
+  )
   return (
     <div className="header">
       <img src={logo} alt="logo" className="header_logo"></img>
-      <div className="header_links">
-        <span className="header_link">01</span>
-        <span className="header_link">02</span>
-        <span className="header_link">03</span>
-        <span className="header_link">04</span>
-      </div>
+      <div className="header_links">{getLinks()}</div>
     </div>
   )
 }

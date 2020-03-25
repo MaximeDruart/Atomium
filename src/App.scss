@@ -46,6 +46,18 @@ html {
     background-color: $background-color;
   }
 
+  .background-points {
+    width: 100vw;
+    height: 50vh;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    object-fit: cover;
+    z-index: -99;
+    opacity: 0;
+  }
+
   .canvasContainer {
     position: fixed;
     top: 0;
