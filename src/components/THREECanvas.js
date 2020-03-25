@@ -67,16 +67,20 @@ const THREECanvas = () => {
     const getAtoms = x => {
       const atoms = []
       for (let i = 0; i < x; i++) {
-        let elecCharge = Math.floor(Math.random() * 5) + 1
-        let atom = new Atom({
-          scene,
-          atomRadius: 2,
-          neutrons: Math.floor(Math.random() * 3) + 1,
-          protons: elecCharge,
-          electrons: elecCharge
-        }).getAtom()
-        i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
-        // atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        let atom
+        if (i === 0) {
+          atom = new Atom({ scene, atomRadius: 2, neutrons: 6, protons: 6, electrons: 6 }).getAtom()
+        } else {
+          let elecCharge = Math.floor(Math.random() * 5) + 1
+          atom = new Atom({
+            scene,
+            atomRadius: 2,
+            neutrons: Math.floor(Math.random() * 3) + 1,
+            protons: elecCharge,
+            electrons: elecCharge
+          }).getAtom()
+          atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        }
         atoms.push(atom)
         atomsSceneGroup.add(atom.atomGroup)
       }
@@ -159,11 +163,12 @@ const THREECanvas = () => {
       )
       .to(rotateSpeed, { value: 0 }, "sync")
 
-    updateContext("introSpawnTl", introSpawnTl)
-    updateContext("goToSecondTl", goToSecondTl)
-
     // WIREFRAME CUBE
-    // const cubeGeometry = new THREE.BoxBufferGeometry(10, 10, 10)
+    const cubeGeometry = new THREE.BoxBufferGeometry(4.5, 4.5, 4.5)
+    const cubeMesh = new THREE.Mesh(
+      cubeGeometry,
+      new THREE.MeshStandardMaterial({ color: 0xb2954d, alphaMap: cubeAlphaMap, wireframe: true })
+    )
 
     // var edges = new THREE.EdgesGeometry(cubeGeometry, 10)
     // var line = new THREE.LineSegments(
@@ -174,13 +179,35 @@ const THREECanvas = () => {
     // line.computeLineDistances()
     // scene.add(line)
 
-    // scene.add(
-    //   new THREE.Mesh(
-    //     cubeGeometry,
-    //     new THREE.MeshStandardMaterial({ color: 0xb2954d, alphaMap: cubeAlphaMap, wireframe: true })
-    //   )
-    // )
+    const switchAtom = ({ protons, neutrons, electrons }) => {
+      let atomChild = scene.children.filter(child => child.children.length > 0)[0]
+      gsap.to(atomChild.scale, 0.4, {
+        ease: "Power3.easeIn",
+        x: 0.01,
+        y: 0.01,
+        z: 0.01,
+        onComplete: () => {
+          scene.remove(atomChild)
+          const atom = new Atom({ scene, protons, neutrons, electrons, atomRadius: 2 }).getAtom()
+          scene.add(atom.atomGroup)
+          atoms.push(atom)
+          gsap.from(atom.atomGroup.scale, 0.4, {
+            ease: "Power3.easeOut",
+            x: 0.01,
+            y: 0.01,
+            z: 0.01
+          })
+        }
+      })
 
+      // console.log(scene)
+    }
+
+    // scene.add(cubeMesh)
+
+    updateContext("switchAtom", switchAtom)
+    updateContext("introSpawnTl", introSpawnTl)
+    updateContext("goToSecondTl", goToSecondTl)
     /**
      * Lights
      */

@@ -23,7 +23,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
   }
 
   .point {
@@ -32,6 +31,7 @@
     border-radius: 100%;
     border: solid 1px $gold-color;
     background-color: $background-color;
+    cursor: pointer;
   }
 
   .point-selected {

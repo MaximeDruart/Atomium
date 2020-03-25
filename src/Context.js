@@ -12,7 +12,7 @@ class ContextProvider extends Component {
     }
   }
 
-  updateContext = (property, value, cb = () => {}) => this.setState({ [property]: value }, cb())
+  updateContext = (property, value, cb = () => {}) => this.setState({ [property]: value }, cb)
 
   render() {
     return (
