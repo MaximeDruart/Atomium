@@ -55,7 +55,7 @@ export default [
       "L'eau existe sous les trois états physiques : Solide, on l'appelle glace. Cette transformation s'opère lorsque l'eau liquide baisse en dessous de 0 °C. Liquide, on l'appelle simplement eau. Et gazeux, on l'appelle vapeur. Lorsque l'eau atteint une température de 100 °C, celle-ci se met à bouillir et se transforme en vapeur d'eau."
     ],
     molecule: mol.getMolecule(
-      [new THREE.Vector3(5, -2, 2), new THREE.Vector3(-6, 1, -3), new THREE.Vector3(-1, -3, 6)],
+      [new THREE.Vector3(-7, 4, -1), new THREE.Vector3(5, -3, -2), new THREE.Vector3(-1, -3, 6)],
       [
         {
           origin: 0,
@@ -77,19 +77,6 @@ export default [
 
       "Le méthane est un gaz à effet de serre à l'impact vingt fois plus puissant que celui du dioxyde de carbone sur la planète.Il est le composant très majoritaire du grisou, redouté pour ses explosions dans les mines.Le méthane présent dans les roches profondes (gisement) est exploité comme énergie appelée gaz naturel. C'est alors une énergie fossile.Le méthane peut aussi être produit par la fermentation de déchets dans des digesteurs : la méthanisation. Dans ce cas, c'est une énergie renouvelable."
     ],
-    // molecule: mol.getMolecule(
-    //   [new THREE.Vector3(5, -2, 2), new THREE.Vector3(-6, 1, -3), new THREE.Vector3(-1, -3, 6)],
-    //   [
-    //     {
-    //       origin: 0,
-    //       end: 1
-    //     },
-    //     {
-    //       origin: 0,
-    //       end: 2
-    //     }
-    //   ]
-    // ),
     molecule: mol.getMolecule(
       [
         new THREE.Vector3(0, 0, 0),

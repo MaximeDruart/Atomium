@@ -64,32 +64,41 @@ const THREECanvas = () => {
 
     let molecules = []
     const switchMolecule = molecule => {
-      console.log(molecule, molecules)
+      molecules.length === 0 && gsap.to(camera.position, 0.3, { z: camera.position.z - 10 })
+      molecules.length === 0 &&
+        gsap.to(cubeMesh.scale, 0.3, {
+          x: cubeMesh.scale.x * 1.95,
+          y: cubeMesh.scale.y * 1.95,
+          z: cubeMesh.scale.z * 1.95
+        })
       let switchMolTl = gsap.timeline({
         defaults: { duration: 0.4 }
       })
       molecules.length > 0 &&
         switchMolTl.to(molecules[molecules.length - 1].group.scale, {
           ease: "Power3.easeIn",
-          x: 0.01,
-          y: 0.01,
-          z: 0.01,
+          x: 0.5,
+          y: 0.5,
+          z: 0.5,
           onComplete: () => {
             scene.remove(molecules[molecules.length - 1].group)
             molecules.pop()
           }
         })
-      switchMolTl.from(molecule.group.scale, 0.4, {
-        onStart: () => {
-          // console.log(molecule)
-          scene.add(molecule.group)
-          molecules.push(molecule)
-        },
-        ease: "Power3.easeOut",
-        x: 0.01,
-        y: 0.01,
-        z: 0.01
-      })
+      switchMolTl.fromTo(
+        molecule.group.scale,
+        { x: 0.01, y: 0.01, z: 0.01 },
+        {
+          onStart: () => {
+            scene.add(molecule.group)
+            molecules.push(molecule)
+          },
+          ease: "Power3.easeOut",
+          x: 1,
+          y: 1,
+          z: 1
+        }
+      )
     }
     // molecules.push(scene3data[0].molecule)
     // scene.add(scene3data[0].molecule.group)
@@ -122,7 +131,7 @@ const THREECanvas = () => {
     scene.add(atomsSceneGroup)
 
     const atomInstance = new Atom({ scene })
-    const atoms = getAtoms(150)
+    let atoms = getAtoms(150)
 
     let atomGroups = atoms.map(({ atomGroup }) => atomGroup)
     let atomGroupsButFirst = atomGroups.slice(1)
@@ -193,6 +202,7 @@ const THREECanvas = () => {
             controls.dampingFactor = 0.05
             atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
             updateContext("activeScene", 1)
+            atoms = atoms.slice(0, 1)
           }, 2500)
         }
       })
@@ -232,12 +242,17 @@ const THREECanvas = () => {
           const atom = new Atom({ scene, protons, neutrons, electrons, atomRadius: 2 }).getAtom()
           scene.add(atom.atomGroup)
           atoms.push(atom)
-          gsap.from(atom.atomGroup.scale, 0.4, {
-            ease: "Power3.easeOut",
-            x: 0.01,
-            y: 0.01,
-            z: 0.01
-          })
+          gsap.fromTo(
+            atom.atomGroup.scale,
+            { x: 0.01, y: 0.01, z: 0.01 },
+            {
+              ease: "Power3.easeOut",
+              duration: 0.4,
+              x: 1,
+              y: 1,
+              z: 1
+            }
+          )
         }
       })
     }

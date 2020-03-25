@@ -125,6 +125,7 @@ export default class Atom {
   animateElectrons = (time, atomGroup, elecGroup, elecTrailsGeos, elecTrailsMeshes) => {
     // rotating the whole group. it feels kinda natural if the number of electrons is small.
     elecGroup.children.forEach((pivot, index) => {
+      // pivot.rotation.set(time / 160 + index * 10, time / 160 + index * 10, 0)
       pivot.rotation.set(time / 160 + index * 10, time / 240 + index * 10, time / 320 + index * 10)
     })
 

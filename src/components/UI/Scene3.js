@@ -10,7 +10,6 @@ const Scene3 = () => {
   const $scene3 = useRef(null)
   const { updateContext, activeScene3Molecule, switchMolecule } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
-  const [isFirstRender, setIsFirstRender] = useState(true)
 
   const changeMolecule = val => {
     let newVal = gsap.utils.clamp(0, scene3data.length - 1, activeScene3Molecule + val)
@@ -24,7 +23,6 @@ const Scene3 = () => {
   }, [activeScene3Molecule])
 
   useEffect(() => {
-    setIsFirstRender(false)
     gsap.from($scene3.current, 0.8, { opacity: 0 })
   }, [])
 
