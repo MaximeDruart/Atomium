@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useRef } from "react"
 import { Context } from "../Context"
 import * as THREE from "three"
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import { OrbitControls as ABSOLUTELYNOTORBITCONTROLS } from "three/examples/jsm/controls/OrbitControls.js"
 import Molecule from "./three/Molecule"
 import Atom from "./three/Atom"
 import gsap from "gsap"
@@ -18,6 +18,7 @@ const THREECanvas = () => {
 
   // threejs scene
   useEffect(() => {
+    updateContext("$canvas", $canvas)
     const textureLoader = new THREE.TextureLoader()
     const cubeAlphaMap = textureLoader.load(cubeAlphaMapSource)
 
@@ -149,8 +150,16 @@ const THREECanvas = () => {
           introSpawnTl.kill()
           cubeMesh.scale.set(0.01, 0.01, 0.01)
           scene.add(cubeMesh)
+
+          // on complete :
+          // kinda hacky but else its too long to wait for all atoms to despawn
           setTimeout(() => {
-            // kinda hacky but else its too long to wait for all atoms to despawn
+            controls = new ABSOLUTELYNOTORBITCONTROLS(camera, renderer.domElement)
+            controls.enableDamping = true
+            controls.enablePan = false
+            controls.maxDistance = 35
+            controls.minDistance = 5
+            controls.dampingFactor = 0.05
             atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
             updateContext("activeScene", 1)
           }, 2500)
@@ -179,17 +188,6 @@ const THREECanvas = () => {
       )
       .to(rotateSpeed, { value: 0 }, "sync")
       .to(cubeMesh.scale, 2, { x: 1, y: 1, z: 1 }, "sync")
-
-    // WIREFRAME CUBE
-
-    // var edges = new THREE.EdgesGeometry(cubeGeometry, 10)
-    // var line = new THREE.LineSegments(
-    //   edges,
-    //   new THREE.LineDashedMaterial({ color: 0x000000, linewidth: 1, scale: 1, dashSize: 2, gapSize: 8 })
-    //   // new THREE.MeshStandardMaterial({ color: "red", alphaMap: cubeAlphaMap, wireframe: true })
-    // )
-    // line.computeLineDistances()
-    // scene.add(line)
 
     const switchAtom = ({ protons, neutrons, electrons }) => {
       let atomChild = scene.children.filter(child => child.children.length > 0)[0]
@@ -250,9 +248,7 @@ const THREECanvas = () => {
     renderer.setClearAlpha(0)
     $canvas.current.appendChild(renderer.domElement)
 
-    // const controls = new OrbitControls(camera, renderer.domElement)
-    // controls.enableDamping = true
-    // controls.dampingFactor = 0.05
+    let controls
 
     const animate = function(t) {
       // keeping atom links updated
@@ -271,7 +267,7 @@ const THREECanvas = () => {
       )
 
       // camera movements
-      // controls.update()
+      controls && controls.update()
       if (rotateCamera) {
         camera.position.x =
           camera.position.x * Math.cos(rotateSpeed.value) + camera.position.z * Math.sin(rotateSpeed.value)

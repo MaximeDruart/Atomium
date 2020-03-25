@@ -7,7 +7,7 @@ import gsap from "gsap"
 
 const Scene2 = () => {
   const $scene2 = useRef(null)
-  const { updateContext, activeScene2Atom, switchAtom, $background } = useContext(Context)
+  const { updateContext, activeScene2Atom, switchAtom, $background, $canvas } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -26,6 +26,7 @@ const Scene2 = () => {
     setIsFirstRender(false)
     gsap.from($scene2.current, 0.8, { opacity: 0 })
     gsap.to($background.current, 0.8, { opacity: 0.4 })
+    gsap.set($canvas.current, { zIndex: 10 })
   }, [])
 
   const goToScene3 = () => {
@@ -40,22 +41,19 @@ const Scene2 = () => {
   return (
     <div ref={$scene2} className="scene-2">
       <div className="title">
-        <span className="number">02.</span>Les 3 grandes molécules
+        <span className="number">02.</span>Les 3 principaux atomes
       </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene2data[activeScene2Atom].name}</div>
       <div onClick={() => changeAtom(-1)} className="button previous-atom">
-        Previous molecule
-      </div>
-      <div onClick={() => changeAtom(-1)} className="button previous-atom">
-        Previous molecule
+        Atome précédent
       </div>
       <div onClick={goToScene3} className="next">
-        NEXT
+        SUITE
       </div>
       <div onClick={() => changeAtom(1)} className="button next-atom">
-        Next molecule
+        Atome suivant
       </div>
     </div>
   )
