@@ -2,6 +2,9 @@
 
 # THREEJS
 
+-GENERAL
+-fix atom rotation
+
 -INTRO :
 -add fog
 -fix text scrolll

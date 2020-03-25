@@ -213,11 +213,23 @@ const THREECanvas = () => {
       })
     }
 
+    // transition between second and third where two atoms link together by switching electrons. would take too much time right now.
+    const secondToThirdTl = gsap.timeline({
+      paused: true,
+      defaults: {
+        ease: "Power2.easeOut",
+        duration: 4
+      },
+      onStart: () => {}
+    })
+    // .addLabel("sync").to
+
     // scene.add(cubeMesh)
 
     updateContext("switchAtom", switchAtom)
     updateContext("introSpawnTl", introSpawnTl)
     updateContext("goToSecondTl", goToSecondTl)
+    updateContext("secondToThirdTl", secondToThirdTl)
     /**
      * Lights
      */

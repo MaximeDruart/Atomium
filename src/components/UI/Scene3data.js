@@ -1,7 +1,7 @@
 export default [
   {
     name: "dioxygene O²",
-    description: [
+    descriptions: [
       "Le dioxygène ou oxygène moléculaire est la forme de l'oxygène trouvé dans l'air. C'est une molécule constituée par l'assemblage de deux atomes d'oxygène et a donc la formule O2.",
 
       "Le dioxygène est simplement appelé oxygène dans la vie de tous les jours. Il est apporté aux globules rouges par les poumons au cours de la respiration (inspiration). L'hémoglobine contenue dans les globules rouges est la protéine qui permet cela. Quand on manque d'hémoglobine, on est anémié, on souffre d'anémie.",
@@ -11,27 +11,27 @@ export default [
   },
   {
     name: "dioxyde de carbone CO2",
-    description:[
+    descriptions: [
       "Le dioxyde de carbone, parfois appelé gaz carbonique, est un gaz dont la molécule est formée d'un atome de carbone et de deux atomes d'oxygène. Sa formule est CO2.",
 
       "Il est créé lors de la combustion de produits contenant du carbone, c'est-à-dire par exemple le bois, le charbon, le sucre (source d'énergie chez les êtres vivants), mais aussi le pétrole (pour les véhicules). Du dioxyde de carbone est aussi produit par le raisin lors de la fermentation qui donnera le vin.Ce gaz joue un rôle important dans l'effet de serre qui permet de garder la Terre chaude mais son augmentation provoque le réchauffement climatique.",
-      
+
       "À partir de dioxyde de carbone et d'eau, les plantes et les algues qui contiennent de la chlorophylle sont capables de produire des sucres ou glucides.Les animaux, au contraire, mangent du sucre et le transforment en dioxyde de carbone et eau. Ces deux étapes font partie du cycle du carbone et du cycle de l'eau."
     ]
   },
   {
     name: "eau H20",
-    description:[
+    descriptions: [
       "La molécule d'eau a pour formule H2O, c'est-à-dire qu'elle est composée d'un atome d'oxygène et de deux atomes d'hydrogène. Si on veut parler de deux molécules d’eau, on écrit alors 2H2O.",
 
       "L'eau est l'élément liquide le plus répandu sur la surface de la Terre. Elle est indispensable à toute forme de vie sur la planète. L'homme est composé à 65 % d'eau, les plantes à plus de 85 %. L'homme doit boire au moins 1.5 litres d'eau par jour, le reste est contenu dans les aliments.",
 
       "L'eau existe sous les trois états physiques : Solide, on l'appelle glace. Cette transformation s'opère lorsque l'eau liquide baisse en dessous de 0 °C. Liquide, on l'appelle simplement eau. Et gazeux, on l'appelle vapeur. Lorsque l'eau atteint une température de 100 °C, celle-ci se met à bouillir et se transforme en vapeur d'eau."
-    ] 
+    ]
   },
   {
     name: "méthane CH4",
-    description: [
+    descriptions: [
       "Le méthane est une molécule composée d'un atome de carbone et de quatre atomes d'hydrogène : sa formule brute est donc CH4.",
 
       "C'est un composé organique, produit par les êtres vivants et le processus de fermentation.Dans les conditions habituelles, c'est un gaz. Il peut être mis sous forme liquide à très basse température ou sous forte pression pour être stocké ou transporté.",

@@ -12,8 +12,8 @@
     top: 5vh;
     left: 50%;
     transform: translateX(-50%);
-    color: #B2954D;
-    font-size: 40px;
+    color: #b2954d;
+    font-size: 6vh;
     font-weight: bold;
   }
 
@@ -30,7 +30,7 @@
     top: 80%;
     left: 50%;
     transform: translateX(-50%);
-    color: #B2954D;
+    color: #b2954d;
   }
 
   .description {
@@ -41,21 +41,35 @@
     width: 30vw;
     border: 1px solid black;
     padding: 20px;
-    background-color: #EEEEEE;
+    font-size: 1.85vh;
+    background-color: #eeeeee;
   }
 
   .previous-atom,
   .next-atom {
     position: absolute;
     top: 90%;
-    left: 40%;
+    left: 20%;
     transform: translateX(-50%);
-    transform: translateX(-50%);
-    color: #B2954D;
-
-
+    color: #b2954d;
   }
+
+  .next {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #b2954d;
+    &::after {
+      position: absolute;
+      content: ">";
+      transform: rotate(90deg);
+      top: 60%;
+      left: 50%;
+    }
+  }
+
   .next-atom {
-    left: 60%;
+    left: 80%;
   }
 }

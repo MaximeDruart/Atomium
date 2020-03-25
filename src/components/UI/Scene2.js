@@ -27,16 +27,31 @@ const Scene2 = () => {
     gsap.from($scene2.current, 0.8, { opacity: 0 })
   }, [])
 
+  const goToScene3 = () => {
+    gsap.to($scene2.current, 0.8, {
+      opacity: 0,
+      onComplete: () => {
+        updateContext("activeScene", 2)
+      }
+    })
+  }
+
   return (
     <div ref={$scene2} className="scene-2">
       <div className="title">Les 3 grandes molécules</div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene2data[activeScene2Atom].name}</div>
-      <div onClick={() => changeAtom(-1)} className="previous-atom">
+      <div onClick={() => changeAtom(-1)} className="button previous-atom">
         Previous molecule
       </div>
-      <div onClick={() => changeAtom(1)} className="next-atom">
+      <div onClick={() => changeAtom(-1)} className="button previous-atom">
+        Previous molecule
+      </div>
+      <div onClick={goToScene3} className="next">
+        NEXT
+      </div>
+      <div onClick={() => changeAtom(1)} className="button next-atom">
         Next molecule
       </div>
     </div>
