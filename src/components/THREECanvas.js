@@ -123,6 +123,19 @@ const THREECanvas = () => {
     // let firstAtomPos = atoms[0].atomGroup.position.matrixWorld
     let firstAtomPos = new THREE.Vector3().setFromMatrixPosition(atoms[0].atomGroup.matrixWorld)
 
+    const cubeGeometry = new THREE.BoxBufferGeometry(6, 6, 6)
+    const cubeMesh = new THREE.Mesh(
+      cubeGeometry,
+      new THREE.MeshStandardMaterial({
+        // opacity: 0.7,
+        side: THREE.DoubleSide,
+        color: 0xb2954d,
+        alphaMap: cubeAlphaMap,
+        wireframe: true
+      })
+    )
+
+    // let scene2Group = new THREE.Group()
     let goToSecondTl = gsap
       .timeline({
         paused: true,
@@ -134,10 +147,13 @@ const THREECanvas = () => {
           camera.lookAt(firstAtomPos)
           rotateCamera = false
           introSpawnTl.kill()
-        },
-        onComplete: () => {
-          atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
-          updateContext("activeScene", 1)
+          cubeMesh.scale.set(0.01, 0.01, 0.01)
+          scene.add(cubeMesh)
+          setTimeout(() => {
+            // kinda hacky but else its too long to wait for all atoms to despawn
+            atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
+            updateContext("activeScene", 1)
+          }, 2500)
         }
       })
       .addLabel("sync")
@@ -162,13 +178,9 @@ const THREECanvas = () => {
         "sync"
       )
       .to(rotateSpeed, { value: 0 }, "sync")
+      .to(cubeMesh.scale, 2, { x: 1, y: 1, z: 1 }, "sync")
 
     // WIREFRAME CUBE
-    const cubeGeometry = new THREE.BoxBufferGeometry(4.5, 4.5, 4.5)
-    const cubeMesh = new THREE.Mesh(
-      cubeGeometry,
-      new THREE.MeshStandardMaterial({ color: 0xb2954d, alphaMap: cubeAlphaMap, wireframe: true })
-    )
 
     // var edges = new THREE.EdgesGeometry(cubeGeometry, 10)
     // var line = new THREE.LineSegments(
