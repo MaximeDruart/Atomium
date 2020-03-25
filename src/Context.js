@@ -6,6 +6,7 @@ class ContextProvider extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.activePage = 1
   }
 
   updateContext = (property, value, cb = () => {}) => this.setState({ [property]: value }, cb())
