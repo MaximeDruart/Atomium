@@ -3,14 +3,17 @@ $med-breakpoint: 768px;
 $lg-breakpoint: 992px;
 $xlg-breakpoint: 1200px;
 
+$gold-color: #b4974f;
+$background-color: #F6F6F6;
+
 @font-face {
-  font-family: "Quicksand";
+  font-family: "Quicksand-light";
   src: url("./assets/fonts/quicksand/Quicksand-Light.ttf") format("truetype");
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 @font-face {
-  font-family: "Quicksand";
+  font-family: "Quicksand-normal";
   src: url("./assets/fonts/quicksand/Quicksand-Regular.ttf") format("truetype");
   font-weight: normal;
 }
