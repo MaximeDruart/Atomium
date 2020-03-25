@@ -30,7 +30,7 @@ const Scene2 = () => {
       <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene2data[activeScene2Atom].name}</div>
       <div onClick={() => changeAtom(-1)} className="previous-atom">
-        previous molecule
+        Previous molecule
       </div>
       <div onClick={() => changeAtom(1)} className="next-atom">
         Next molecule

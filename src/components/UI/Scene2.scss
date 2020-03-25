@@ -12,6 +12,9 @@
     top: 5vh;
     left: 50%;
     transform: translateX(-50%);
+    color: #B2954D;
+    font-size: 40px;
+    font-weight: bold;
   }
 
   .timeline {
@@ -27,6 +30,7 @@
     top: 80%;
     left: 50%;
     transform: translateX(-50%);
+    color: #B2954D;
   }
 
   .description {
@@ -36,6 +40,8 @@
     transform: translateX(-50%);
     width: 30vw;
     border: 1px solid black;
+    padding: 20px;
+    background-color: #EEEEEE;
   }
 
   .previous-atom,
@@ -44,6 +50,10 @@
     top: 90%;
     left: 40%;
     transform: translateX(-50%);
+    transform: translateX(-50%);
+    color: #B2954D;
+
+
   }
   .next-atom {
     left: 60%;

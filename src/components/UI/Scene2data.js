@@ -1,6 +1,6 @@
 export default [
   {
-    name: "carbone",
+    name: "Carbone",
     descriptions: [
       "Le carbone est principalement présent à l'état naturel sous deux formes allotropiques : le graphite et le diamant. On peut pour finir le trouver sous d'autres formes comme : Charbon, Pétrole, Sédiments. Le dioxyde de carbone, de formule , est présent quant à lui dans l'atmosphère sous forme de gaz et dans les eaux océaniques et continentales, sous forme de gaz dissout.",
 
@@ -15,7 +15,7 @@ export default [
     }
   },
   {
-    name: "hydrogene",
+    name: "Hydrogene",
     descriptions: [
       "L'hydrogène est un élément chimique qui porte le numéro 1 dans la classification périodique des éléments.Son noyau n'a qu'un seul proton et son isotope principal est même dénué de neutron (un cas unique) ce qui fait de l'atome d'hydrogène le plus simple, le plus petit et le plus léger des atomes",
 
@@ -30,7 +30,7 @@ export default [
     }
   },
   {
-    name: "oxygene",
+    name: "Oxygene",
     descriptions: [
       "L'oxygène est le troisième élément chimique le plus abondant de l'univers (après l'hydrogène et l'hélium). Sur Terre, il est présent combiné à divers éléments, sous forme d'oxydes minéraux ou au sein de fonctions chimiques des composés organiques (alcool, cétone, acide carboxylique...). Il est présent dans l'air sous forme de dioxygène, dans l'eau combiné avec l'hydrogène et les composés biologiques. Il est vital pour la plupart des organismes vivants sur terre.",
 
