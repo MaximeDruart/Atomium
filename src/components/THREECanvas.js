@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef } from "react"
 import { Context } from "../Context"
 import * as THREE from "three"
@@ -62,7 +63,8 @@ const THREECanvas = () => {
       const atoms = []
       for (let i = 0; i < x; i++) {
         let atom = atomInstance.getAtom()
-        i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        // i !== 0 && atom.atomGroup.position.set(ran(100), ran(70), ran(100))
+        atom.atomGroup.position.set(ran(100), ran(70), ran(100))
         atoms.push(atom)
         scene.add(atom.atomGroup)
       }
@@ -78,17 +80,17 @@ const THREECanvas = () => {
 
     camera.position.set(3, 25, 150)
 
-    let spawnEnded = false
-    let spawnTl = gsap
+    let rotateCamera = false
+    let introSpawnTl = gsap
       .timeline({
-        paused: false,
+        paused: true,
         defaults: {
           ease: "Power2.easeOut",
           duration: 4
         }
       })
       .addLabel("sync")
-      .to(camera.position, { duration: 3.5, x: 0, y: 0, onComplete: () => (spawnEnded = true) }, "sync")
+      .to(camera.position, { duration: 3.5, x: 0, y: 0, onComplete: () => (rotateCamera = true) }, "sync")
       .to(camera.position, { z: 15 }, "sync")
       .from(camera.rotation, { y: Math.PI / 8, z: -Math.PI / 4 }, "sync")
       .from(
@@ -101,7 +103,25 @@ const THREECanvas = () => {
         "sync"
       )
 
-    // spawnTl.play()
+    let firstAtomPos = atoms[0].atomGroup.position
+
+    console.log(firstAtomPos)
+    let goToSecondTl = gsap
+      .timeline({
+        paused: true,
+        defaults: {
+          ease: "Power2.easeOut",
+          duration: 4
+        },
+        onStart: () => {
+          camera.lookAt(firstAtomPos)
+        }
+      })
+      .addLabel("sync")
+      .to(camera.position, 2, { x: firstAtomPos.x, y: firstAtomPos.y, z: firstAtomPos.z - 10 })
+
+    updateContext("introSpawnTl", introSpawnTl)
+    updateContext("goToSecondTl", goToSecondTl)
 
     // WIREFRAME CUBE
     // const cubeGeometry = new THREE.BoxBufferGeometry(10, 10, 10)
@@ -129,10 +149,9 @@ const THREECanvas = () => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1)
     scene.add(ambientLight)
 
-    const additionalLight = new THREE.DirectionalLight(0xB4974F, 1)
+    const additionalLight = new THREE.DirectionalLight(0xb4974f, 1)
     additionalLight.position.set(2, 2, 2)
     scene.add(additionalLight)
-
 
     /**
      * Renderer
@@ -165,7 +184,7 @@ const THREECanvas = () => {
 
       // camera movements
       // controls.update()
-      if (spawnEnded) {
+      if (rotateCamera) {
         camera.position.x = camera.position.x * Math.cos(0.008) + camera.position.z * Math.sin(0.008)
         camera.position.z = camera.position.z * Math.cos(0.008) - camera.position.x * Math.sin(0.008)
         camera.lookAt(scene.position)

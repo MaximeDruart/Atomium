@@ -9,7 +9,6 @@ const AppWrap = () => {
       <div className="background"></div>
       <UserInterface />
       <THREECanvas />
-      <div className="content"></div>
     </div>
   )
 }

@@ -1,0 +1,39 @@
+@import "../../utils.scss";
+
+.intro-container {
+  * {
+    font-family: "Quicksand-normal";
+  }
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  .number {
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    font-size: 8vh;
+    &::after {
+      position: absolute;
+      background: black;
+      content: "";
+      width: 80%;
+      height: 1px;
+      top: 100%;
+      left: 0;
+    }
+  }
+
+  .text-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    .text-item {
+      .title {
+      }
+
+      .body {
+      }
+    }
+  }
+}
