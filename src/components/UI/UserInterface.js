@@ -5,7 +5,7 @@ import "./UI.scss"
 import Intro from "./Intro"
 
 const UserInterface = () => {
-  const [activeScene, setactiveScene] = useState()
+  const [activeScene, setActiveScene] = useState()
   return (
     <div className="ui">
       <Header />
