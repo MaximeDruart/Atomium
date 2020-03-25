@@ -43,7 +43,7 @@ const Intro = props => {
         setTimeSinceLastChange(Date.now())
         textIndex !== newValue &&
           gsap.timeline()
-          .fromTo(".intro-container", {opacity: 0}, {opacity: 1, duration: 1});
+          .fromTo($textContainer.current, {opacity: 0}, {opacity: 1, duration: 1.5});
 
         // textIndex === introTexts.length && goToNext()
         return newValue
