@@ -12,7 +12,7 @@ const Scene2 = () => {
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   const changeAtom = val => {
-    let newVal = gsap.utils.clamp(0, 2, activeScene2Atom + val)
+    let newVal = gsap.utils.clamp(0, scene2data.length - 1, activeScene2Atom + val)
     newVal !== activeScene2Atom && updateContext("activeScene2Atom", newVal)
   }
 
@@ -27,6 +27,7 @@ const Scene2 = () => {
     gsap.from($scene2.current, 0.8, { opacity: 0 })
     gsap.to($background.current, 0.8, { opacity: 0.4 })
     gsap.set($canvas.current, { zIndex: 10 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const goToScene3 = () => {

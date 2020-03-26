@@ -28,7 +28,9 @@ const Scene3 = () => {
 
   return (
     <div ref={$scene3} className="scene-2 scene-3">
-      <div className="title">Les 3 grandes molécules</div>
+      <div className="title">
+        <span className="number">03.</span> Les 3 grandes molécules
+      </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene3data[activeScene3Molecule].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene3data[activeScene3Molecule].name}</div>

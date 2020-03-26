@@ -24,8 +24,9 @@ const THREECanvas = () => {
     const cubeAlphaMap = textureLoader.load(cubeAlphaMapSource)
 
     const scene = new THREE.Scene()
+    scene.fog = new THREE.Fog("lightblue", 5, 100)
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500)
     // using an object so it can be tweened
     let rotateSpeed = {
       value: 0.008
