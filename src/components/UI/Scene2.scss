@@ -54,10 +54,12 @@
     left: 20%;
     transform: translateX(-50%);
     width: 30vw;
-    border: 1px solid black;
+    border: 1px solid #bbb;
+    border-radius: 10px;
     padding: 20px;
     font-size: 1.85vh;
-    background-color: #eeeeee;
+    background-color: #efefef;
+    opacity: 0.9;
   }
 
   .previous-atom,
