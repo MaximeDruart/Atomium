@@ -37,7 +37,7 @@ export default [
         {
           origin: 0,
           end: 1
-        },
+       },
         {
           origin: 0,
           end: 2
