@@ -43,18 +43,18 @@ const Scene2 = () => {
   return (
     <div ref={$scene2} className="scene-2">
       <div className="title">
-        <span className="number">02.</span>Les 3 principaux atomes
+        <span className="number">02.</span>Les principaux atomes
       </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene2data[activeScene2Atom].name}</div>
-      <div onClick={() => changeAtom(-1)} className="button previous-atom">
+      <div onClick={() => changeAtom(-1)} className="mf-active button previous-atom">
         Atome précédent
       </div>
-      <div onClick={goToScene3} className="next">
-        SUITE
+      <div onClick={goToScene3} className="mf-active next">
+        Découvrir les molécules
       </div>
-      <div onClick={() => changeAtom(1)} className="button next-atom">
+      <div onClick={() => changeAtom(1)} className="mf-active button next-atom">
         Atome suivant
       </div>
     </div>
