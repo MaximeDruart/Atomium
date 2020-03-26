@@ -42,8 +42,7 @@ const Intro = props => {
 
         setTimeSinceLastChange(Date.now())
         textIndex !== newValue &&
-          gsap.timeline()
-          .fromTo($textContainer.current, {opacity: 0}, {opacity: 1, duration: 1.5});
+          gsap.timeline().fromTo($textContainer.current, { opacity: 0 }, { opacity: 1, duration: 1.5 })
 
         // textIndex === introTexts.length && goToNext()
         return newValue
@@ -93,7 +92,7 @@ const Intro = props => {
       <div ref={$textContainer} className="text-container">
         {getMappedTexts()}
       </div>
-      <div onClick={goToNext} className="skip-button button">
+      <div onClick={goToNext} className="mf-active skip-button button">
         SKIP INTRO
       </div>
     </div>
@@ -101,4 +100,3 @@ const Intro = props => {
 }
 
 export default Intro
-

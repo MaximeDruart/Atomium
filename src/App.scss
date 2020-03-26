@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   scrollbar-width: none;
+  cursor: none !important;
 }
 
 ::-webkit-scrollbar {
@@ -28,6 +29,44 @@ html {
   font-size: 2vh;
   padding: 12px 25px;
   text-decoration: none;
+}
+
+.mouseFollower {
+  overflow: visible;
+  // mix-blend-mode: exclusion;
+  z-index: 100000;
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: $sm-breakpoint) {
+    display: none;
+  }
+  .outer-circle,
+  .inner-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: $gold-color;
+    opacity: 0.25;
+    transform: translate(-50px, -50px);
+  }
+
+  .inner-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    opacity: 0.8;
+  }
 }
 
 .container {
