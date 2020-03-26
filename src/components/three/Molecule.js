@@ -13,17 +13,19 @@ export default class Molecule {
   getMolecule = (atomsArray, linksArray) => {
     const group = new THREE.Group()
     const atoms = atomsArray.map(atom => {
-      // error handling for previous version where atom wasn't an object
-      const atomMesh = atom.size ? this.getAtom(atom.position, atom.size) : this.getAtom(atom)
+      const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(atom.size, 8, 8), this.wfMaterial)
+      atomMesh.position.set(atom.position.x, atom.position.y, atom.position.z)
       group.add(atomMesh)
-      // return atomMesh
       return {
         mesh: atomMesh,
         size: atom.size || this.atomSize
       }
     })
     const links = linksArray.map(link => {
-      const linkMesh = this.getLink(this.atomSize)
+      const linkMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(this.atomSize / 5, this.atomSize / 5, 1, 8, 8, true),
+        this.wfMaterial
+      )
       group.add(linkMesh)
       return {
         origin: link.origin,
@@ -32,15 +34,8 @@ export default class Molecule {
       }
     })
 
-    return {
-      group,
-      atoms,
-      links
-    }
+    return { group, atoms, links }
   }
-
-  getLink = (atomSize = 2, segments = 8, mat = this.wfMaterial) =>
-    new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
 
   setLinkCoords = (atom1, atom2, atomLink, atomSize1, atomSize2) => {
     // atom.position is relative to the group but we need absolute positionings to calculate the distance between atoms and the lookAt vector.
@@ -56,11 +51,5 @@ export default class Molecule {
     atomLink.translateY(distanceBetweenAtoms / 2 + atomSize1)
     // scaling it to fit to the needed distance
     atomLink.scale.y = distanceBetweenAtoms
-  }
-
-  getAtom = ({ x, y, z }, size = 2) => {
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 8, 8), this.wfMaterial)
-    mesh.position.set(x, y, z)
-    return mesh
   }
 }
