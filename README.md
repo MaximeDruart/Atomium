@@ -1,14 +1,16 @@
 # Webgl SI Atomium
 3D atom museum with WebGL and three.js
 
-#instruction
+# instruction
 
 launch cmd : cd of the target folder then "npm run start"
 
-#Features
+# Features
 
 -Immersive background
 -Immersive animations
+-Interactive 3d animations
+-Custom cursor
 
 HTML
 CSS
@@ -17,7 +19,7 @@ React.js
 WebGL
 Three.js
 
-#Author
+# Author
 
 Druart Maxime
 Givre Johann 
