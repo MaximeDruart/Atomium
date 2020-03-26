@@ -104,5 +104,64 @@ export default [
         }
       ]
     )
+  },
+  {
+    name: "L'éthanol",
+    descriptions: [
+      "L'éthanol, ou alcool éthylique Écouter (ou plus simplement alcool), est un alcool de formule semi-développée CH3-CH2-OH",
+
+      "C'est un psychotrope, et l'une des plus anciennes drogues récréatives, sous la forme de boisson alcoolisée.",
+
+      "L'éthanol est utilisé par l'industrie agroalimentaire (pour la production de spiritueux notamment), la parfumerie et la pharmacie galénique (comme solvant) ainsi qu'en biocarburant (bioéthanol). Il est en outre utilisé dans les thermomètres à alcool."
+    ],
+    molecule: mol.getMolecule(
+      [
+        new THREE.Vector3(4, 0, 0), // atome centrale
+        new THREE.Vector3(-2, 1, -1), // atome a droite
+        new THREE.Vector3(11, 5, 3), // atoem gauche
+        new THREE.Vector3(8, -5, -3),
+        new THREE.Vector3(6, 2, -7), // atome 2
+        new THREE.Vector3(-8, 7, 1),
+        new THREE.Vector3( -7, -3, 2), // fond droit
+        new THREE.Vector3( -7, -1, -6),// proche droit
+        new THREE.Vector3( -13, 8, 1)
+
+
+      ],
+      [
+        {
+          origin: 0,
+          end: 1
+        },
+        {
+          origin: 0,
+          end: 2
+        },
+        {
+          origin: 0,
+          end: 3
+        },
+        {
+          origin: 0,
+          end: 4
+        },
+        {
+          origin: 1,
+          end: 5
+        },
+        {
+          origin: 1,
+          end: 6
+        },
+        {
+          origin: 1,
+          end: 7
+        },
+        {
+          origin: 5,
+          end: 8
+        }
+      ]
+    )
   }
 ]
