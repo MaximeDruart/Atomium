@@ -35,10 +35,10 @@ const Scene3 = () => {
       <div className="description">{scene3data[activeScene3Molecule].descriptions[activeDescription]}</div>
       <div className="atom-name">{scene3data[activeScene3Molecule].name}</div>
       <div onClick={() => changeMolecule(-1)} className="mf-active button previous-atom previous-Molecule">
-        previous molecule
+        Molécule précédente
       </div>
       <div onClick={() => changeMolecule(1)} className="mf-active button next-atom next-Molecule">
-        Next molecule
+        Molécule suivante
       </div>
     </div>
   )
