@@ -18,7 +18,11 @@ const Header = () => {
   )
   return (
     <div className="header">
-      <img src={logo} alt="logo" className="mf-active header-logo"></img>
+      <img
+        onClick={() => updateContext("activeScene", 0)}
+        src={logo}
+        alt="logo"
+        className="mf-active header-logo"></img>
       <div className="header-links">{getLinks()}</div>
     </div>
   )
