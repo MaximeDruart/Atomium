@@ -54,7 +54,7 @@ const Scene2 = () => {
           Atome précédent
         </div>
       )}
-      <div onClick={goToScene3} className="mf-active next">
+      <div onClick={goToScene3} className="mf-active next buttonNext">
         Découvrir les molécules
       </div>
       {activeAtom < scene2data.length - 1 && (

@@ -31,6 +31,19 @@ html {
   text-decoration: none;
 }
 
+.buttonNext {
+  border-radius: 28px;
+  border: 1px solid $gold-color;
+  display: inline-block;
+  cursor: pointer;
+  color: $gold-color;
+  font-family: "Quicksand-normal";
+  font-size: 2vh;
+  padding: 12px 25px;
+  text-decoration: none;
+
+}
+
 .mouseFollower {
   overflow: visible;
   // mix-blend-mode: exclusion;
