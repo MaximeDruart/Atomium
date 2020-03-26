@@ -21,18 +21,18 @@
     justify-content: space-between;
     z-index: 100;
 
-    .header_logo {
+    .header-logo {
       height: 40px;
       margin-left: 2vw;
     }
 
-    .header_links {
+    .header-links {
       display: flex;
       justify-content: space-between;
       font-size: 1.3em;
       margin-right: 2vw;
 
-      .header_link {
+      .header-link {
         color: black;
         text-decoration: none;
         font-family: "Quicksand-light", sans-serif;

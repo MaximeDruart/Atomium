@@ -10,7 +10,7 @@ const Header = () => {
         <span
           onClick={() => updateContext("activeScene", index)}
           key={index}
-          className={activeScene === index ? "header_link active" : "header_link"}>
+          className={activeScene === index ? "mf-active header-link active" : "mf-active header-link"}>
           0{index + 1}
         </span>
       )),
@@ -18,8 +18,12 @@ const Header = () => {
   )
   return (
     <div className="header">
-      <img src={logo} alt="logo" className="header_logo"></img>
-      <div className="header_links">{getLinks()}</div>
+      <img
+        onClick={() => updateContext("activeScene", 0)}
+        src={logo}
+        alt="logo"
+        className="mf-active header-logo"></img>
+      <div className="header-links">{getLinks()}</div>
     </div>
   )
 }

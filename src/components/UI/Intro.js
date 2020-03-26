@@ -5,17 +5,17 @@ import gsap from "gsap"
 
 const introTexts = [
   {
-    body: "La matière est constituée de molécules et d'atomes."
+    body: "Le monde est rempli d’atomes et de molécules qui s’assemblent pour créer la matière qui nous entoure."
   },
   {
     title: "Qu'est ce qu'une molécule ?",
     body:
-      "Une molécule est une particule microscopique qui compose la plupart des matières. Une molécule correspond à un regroupement d'atomes liés entre eux. Ces atomes ne peuvent se séparer spontanément : seule une transformation chimique peut modifier la composition d'une molécule."
+      "Une molécule est une particule microscopique qui naît d’un  regroupement d'atomes. "
   },
   {
     title: "Et un atome alors ?",
     body:
-      " Un atome contient un noyau (ensemble de protons et de neutrons), et autour de ce noyau, il y a des électrons. On distingue ces particules du fait qu'elles comportent des « charges » différentes : les neutrons n'ont aucune charge, les protons ont une charge positive, et les électrons une charge négative. Ce sont les atomes qui composent les molécules."
+      "Un atome contient un noyau autour du quel gravite des électrons. Il possède 3 types de particules : les neutrons, les protons et les electrons. Ce sont ces atomes qui composent les molécules."
   },
   {
     body:
@@ -42,8 +42,7 @@ const Intro = props => {
 
         setTimeSinceLastChange(Date.now())
         textIndex !== newValue &&
-          gsap.timeline()
-          .fromTo($textContainer.current, {opacity: 0}, {opacity: 1, duration: 1.5});
+          gsap.timeline().fromTo($textContainer.current, { opacity: 0 }, { opacity: 1, duration: 1.5 })
 
         // textIndex === introTexts.length && goToNext()
         return newValue
@@ -93,7 +92,7 @@ const Intro = props => {
       <div ref={$textContainer} className="text-container">
         {getMappedTexts()}
       </div>
-      <div onClick={goToNext} className="skip-button button">
+      <div onClick={goToNext} className="mf-active skip-button button">
         SKIP INTRO
       </div>
     </div>
@@ -101,4 +100,3 @@ const Intro = props => {
 }
 
 export default Intro
-

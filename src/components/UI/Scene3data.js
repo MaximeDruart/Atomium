@@ -13,13 +13,11 @@ export default [
       "Au cours de la respiration cellulaire, la molécule de dioxygène sert à brûler les nutriments, et les transforme en molécules de dioxyde de carbone et d'eau durant la dernière étape du processus. De nombreux êtres vivants sont incapables de vivre sans le gaz dioxygène. Seules les plantes sont capables d'en produire : c'est le phénomène de photosynthèse. Il est le comburant obligatoire lors d'une combustion car il est le seul gaz de l'air qui permet les combustions."
     ],
     molecule: mol.getMolecule(
-      [new THREE.Vector3(0, 0, 0), new THREE.Vector3(-6, 1, -3)],
       [
-        {
-          origin: 0,
-          end: 1
-        }
-      ]
+        { size: 3, position: new THREE.Vector3(0, 0, 0) },
+        { size: 1.8, position: new THREE.Vector3(-6, 1, -3) }
+      ],
+      [{ origin: 0, end: 1 }]
     )
   },
   {
@@ -32,16 +30,14 @@ export default [
       "À partir de dioxyde de carbone et d'eau, les plantes et les algues qui contiennent de la chlorophylle sont capables de produire des sucres ou glucides.Les animaux, au contraire, mangent du sucre et le transforment en dioxyde de carbone et eau. Ces deux étapes font partie du cycle du carbone et du cycle de l'eau."
     ],
     molecule: mol.getMolecule(
-      [new THREE.Vector3(5, -2, 2), new THREE.Vector3(-6, 1, -3), new THREE.Vector3(-1, -3, 6)],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        }
+        { size: 2.6, position: new THREE.Vector3(5, -2, 2) },
+        { size: 2, position: new THREE.Vector3(-6, 1, -3) },
+        { size: 2, position: new THREE.Vector3(-1, -3, 6) }
+      ],
+      [
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 }
       ]
     )
   },
@@ -55,16 +51,14 @@ export default [
       "L'eau existe sous les trois états physiques : Solide, on l'appelle glace. Cette transformation s'opère lorsque l'eau liquide baisse en dessous de 0 °C. Liquide, on l'appelle simplement eau. Et gazeux, on l'appelle vapeur. Lorsque l'eau atteint une température de 100 °C, celle-ci se met à bouillir et se transforme en vapeur d'eau."
     ],
     molecule: mol.getMolecule(
-      [new THREE.Vector3(-7, 4, -1), new THREE.Vector3(5, -3, -2), new THREE.Vector3(-1, -3, 6)],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        }
+        { size: 3, position: new THREE.Vector3(-7, 4, -1) },
+        { size: 2.1, position: new THREE.Vector3(5, -3, -2) },
+        { size: 2.1, position: new THREE.Vector3(-1, -3, 6) }
+      ],
+      [
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 }
       ]
     )
   },
@@ -79,29 +73,17 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(-6, 1, -1),
-        new THREE.Vector3(7, -2, 1),
-        new THREE.Vector3(-3, -7, 1),
-        new THREE.Vector3(2, 5, -1)
+        { size: 2.5, position: new THREE.Vector3(0, 0, 0) },
+        { size: 1.3, position: new THREE.Vector3(-6, 1, -1) },
+        { size: 1.3, position: new THREE.Vector3(7, -2, 1) },
+        { size: 1.3, position: new THREE.Vector3(-3, -7, 1) },
+        { size: 1.3, position: new THREE.Vector3(2, 5, -1) }
       ],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        },
-        {
-          origin: 0,
-          end: 3
-        },
-        {
-          origin: 0,
-          end: 4
-        }
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 },
+        { origin: 0, end: 3 },
+        { origin: 0, end: 4 }
       ]
     )
   },

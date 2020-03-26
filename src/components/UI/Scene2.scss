@@ -79,11 +79,7 @@
     color: $gold-color;
     border-radius: 50%;
     &::after {
-      position: absolute;
-      content: ">";
-      transform: rotate(90deg);
-      top: 60%;
-      left: 50%;
+      
     }
   }
 
