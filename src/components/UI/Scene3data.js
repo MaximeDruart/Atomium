@@ -90,7 +90,7 @@ export default [
   {
     name: "L'éthanol",
     descriptions: [
-      "L'éthanol, ou alcool éthylique Écouter (ou plus simplement alcool), est un alcool de formule semi-développée CH3-CH2-OH",
+      "L'éthanol, ou alcool éthylique (ou plus simplement alcool), est un alcool de formule semi-développée CH3-CH2-OH",
 
       "C'est un psychotrope, et l'une des plus anciennes drogues récréatives, sous la forme de boisson alcoolisée.",
 
