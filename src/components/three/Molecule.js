@@ -36,7 +36,7 @@ export default class Molecule {
     }
   }
 
-  getLink = (atomSize = 2, segments = 16, mat = this.wfMaterial) =>
+  getLink = (atomSize = 2, segments = 8, mat = this.wfMaterial) =>
     new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
 
   setLinkCoords = (atom1, atom2, atomLink, atomSize) => {
