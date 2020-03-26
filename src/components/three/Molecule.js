@@ -3,7 +3,6 @@ import * as THREE from "three"
 export default class Molecule {
   constructor(atomSize = 2) {
     this.atomSize = atomSize
-    this.sphereGeometry = new THREE.SphereGeometry(this.atomSize, 8, 8)
     this.wfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
       color: 0x666666

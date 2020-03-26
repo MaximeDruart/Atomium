@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useRef } from "react"
 import * as THREE from "three"
 import { OrbitControls as ABSOLUTELYNOTORBITCONTROLS } from "three/examples/jsm/controls/OrbitControls.js"
+import { DragControls } from "three/examples/jsm/controls/DragControls"
 import gsap from "gsap"
 import ThreePlugin from "./three/GSAPTHREE"
 import cubeAlphaMapSource from "../assets/images/cubeAlphaMap.jpg"
@@ -35,11 +36,11 @@ const THREECanvas = () => {
     let rotateSpeed = { value: 0.008 }
     let rotateCamera = false
 
-    // const axesHelper = new THREE.AxesHelper(5)
-    // scene.add(axesHelper)
+    const axesHelper = new THREE.AxesHelper(10)
+    scene.add(axesHelper)
 
-    // const gridHelper = new THREE.GridHelper(100, 100)
-    // scene.add(gridHelper)
+    const gridHelper = new THREE.GridHelper(100, 100)
+    scene.add(gridHelper)
 
     /**
      * Objects
@@ -225,10 +226,7 @@ const THREECanvas = () => {
     const switchAtom = ({ protons, neutrons, electrons }) => {
       // the only child with children at the moment this function is executed is the atom group.
       let atomChild = scene.children.filter(child => child.children.length > 0)[0]
-
-      console.log(scene.children)
-      console.log(atomChild)
-      let switchAtomTl = gsap.timeline({ onComplete: () => console.log(scene.children), defaults: { duration: 0.4 } })
+      let switchAtomTl = gsap.timeline({ defaults: { duration: 0.4 } })
       atomChild &&
         switchAtomTl.to(atomChild.scale, 0.4, {
           ease: "Power3.easeIn",
@@ -297,11 +295,102 @@ const THREECanvas = () => {
     updateContext("switchMolecule", switchMolecule)
 
     // utils
+    updateContext("scene", scene)
     updateContext("clearAtomsAnimated", clearAtomsAnimated)
     updateContext("clearSceneOfGroups", clearSceneOfGroups)
     updateContext("toggleControls", toggleControls)
     updateContext("toggleCube", toggleCube)
     updateContext("adjustCamForMoleculeTl", adjustCamForMoleculeTl)
+
+    // SCENE 4  :
+    class Game {
+      constructor() {
+        this.group = new THREE.Group()
+        this.wfMaterial = new THREE.MeshStandardMaterial({ wireframe: true, color: 0x666666 })
+        this.sphereGeometry = new THREE.SphereGeometry(2, 8, 8)
+        scene.add(this.group)
+        this.isRaycasting = false
+        this.raycaster = new THREE.Raycaster()
+        this.mousePos = new THREE.Vector2()
+        this.controls = new DragControls(this.group.children, camera, renderer.domElement)
+        this.elementsToRaycast = this.group.children
+        this.molecules = []
+        this.selectedAtoms = []
+      }
+
+      ran = x => Math.random() * x - x / 2
+
+      createSimpleAtom = (size, color) => {
+        let atom = new THREE.Mesh(
+          new THREE.SphereGeometry(size, 8, 8),
+          new THREE.MeshStandardMaterial({ wireframe: true, color: color || 0x666666 })
+        )
+        atom.userData = { size, color }
+        atom.position.set(this.ran(5), this.ran(5) + 5, this.ran(5))
+        this.group.add(atom)
+      }
+
+      getLink = (atomSize = 2, segments = 8, mat = this.wfMaterial) =>
+        new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
+
+      clickHandler = event => {
+        game.raycaster.setFromCamera(this.mousePos, camera)
+        let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
+        for (var i = 0; i < intersects.length; i++) {
+          intersects[0].object.material.color.set(0xff0000)
+          if (this.selectedAtoms.length === 1) {
+            if (this.selectedAtoms[0] === intersects[0].object) {
+              this.selectedAtoms[0].material.color.set(this.selectedAtoms[0].userData.color)
+            } else this.connectAtoms(this.selectedAtoms[0], intersects[0].object)
+            this.selectedAtoms = []
+          } else this.selectedAtoms.push(intersects[0].object)
+        }
+      }
+
+      connectAtoms = (atom1, atom2) => {
+        let moleculeGroup = new THREE.Group()
+        const linkMesh = this.getLink()
+        const link = {
+          mesh: linkMesh,
+          origin: atom1,
+          end: atom2
+        }
+        atom1.material.color.set(atom1.userData.color)
+        const atom1obj = { mesh: atom1, size: atom1.userData.size }
+        const atom2obj = { mesh: atom2, size: atom2.userData.size }
+        atom2.material.color.set(atom2.userData.color)
+        moleculeGroup.add(atom1, atom2, linkMesh)
+        const moleculeRaw = {
+          atom1: atom1obj,
+          atom2: atom2obj,
+          link,
+          group: moleculeGroup
+        }
+        this.group.add(moleculeGroup)
+        this.molecules.push(moleculeRaw)
+      }
+
+      mouseMoveHandler = event => {
+        this.mousePos.x = (event.clientX / window.innerWidth) * 2 - 1
+        this.mousePos.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+        game.raycaster.setFromCamera(this.mousePos, camera)
+        let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
+        for (var i = 0; i < intersects.length; i++) {}
+      }
+
+      listenToEvents = () => {
+        this.isRaycasting = true
+        renderer.domElement.addEventListener("mousemove", this.mouseMoveHandler)
+        renderer.domElement.addEventListener("click", this.clickHandler)
+      }
+
+      clearEvents = () => {
+        this.isRaycasting = false
+        renderer.domElement.removeEventListener("mousemove", this.mouseMoveHandler)
+        renderer.domElement.removeEventListener("click", this.clickHandler)
+      }
+    }
 
     /**
      * Lights
@@ -317,16 +406,41 @@ const THREECanvas = () => {
     /**
      * Renderer
      */
-    const renderer = new THREE.WebGLRenderer({ alpha: true })
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false })
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setClearAlpha(0)
     $canvas.current.appendChild(renderer.domElement)
 
     let controls
+    const game = new Game()
+    updateContext("game", game)
 
     const animate = function(t) {
       // keeping molecules links updated
+      game.molecules[0] && console.log(game.molecules[0])
+      for (let i = 0; i < game.molecules.length; i++) {
+        mol.setLinkCoords(
+          game.molecules[i].atom1.mesh,
+          game.molecules[i].atom2.mesh,
+          game.molecules[i].link.mesh,
+          game.molecules[i].atom1.size,
+          game.molecules[i].atom2.size
+        )
+      }
+      // game.molecules.forEach(molecule => {
+      //   molecule.links.forEach(link => {
+      //     mol.setLinkCoords(
+      //       molecule.atoms[link.origin].mesh,
+      //       molecule.atoms[link.end].mesh,
+      //       link.mesh,
+      //       molecule.atoms[link.origin].size,
+      //       molecule.atoms[link.end].size
+      //     )
+      //   })
+      // })
+
+      console.log("animating")
       molecules.forEach(molecule => {
         molecule.links.forEach(link => {
           mol.setLinkCoords(
@@ -349,6 +463,13 @@ const THREECanvas = () => {
           atom.electronTrailsMeshes
         )
       )
+
+      // raycasting
+      // if (game.isRaycasting) {
+      //   game.raycaster.setFromCamera(game.mousePos, camera)
+      //   let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
+      //   for (var i = 0; i < intersects.length; i++) {}
+      // }
 
       // camera movements
       controls && controls.update()

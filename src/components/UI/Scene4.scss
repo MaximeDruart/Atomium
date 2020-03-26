@@ -1,0 +1,14 @@
+@import "../../utils.scss";
+
+.scene-4 {
+  position: relative;
+  .controls {
+    border: 1px solid red;
+    height: 80vh;
+    width: 20vh;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
