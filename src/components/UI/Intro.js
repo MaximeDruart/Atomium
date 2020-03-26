@@ -58,14 +58,12 @@ const Intro = () => {
 
   // playing the atom spawns timeline on mount
   useEffect(() => {
-    const spawnText = () =>
+    if (introSpawnTl && toggleCube) {
       setTimeout(() => {
-        gsap.timeline().to($introContainer.current, 1, { ease: "Power3.easeInOut", opacity: 1 })
+        gsap.to($introContainer.current, 1, { ease: "Power3.easeInOut", opacity: 1 })
       }, 3500)
-    toggleCube && toggleCube(false)
-    if (introSpawnTl) {
-      introSpawnTl.eventCallback("onStart", spawnText)
-      introSpawnTl.restart()
+      toggleCube(false)
+      introSpawnTl.play()
     }
   }, [introSpawnTl, toggleCube])
 
