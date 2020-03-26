@@ -15,7 +15,7 @@ export default [
     }
   },
   {
-    name: "Hydrogene",
+    name: "Hydrogène",
     descriptions: [
       "L'hydrogène est un élément chimique qui porte le numéro 1 dans la classification périodique des éléments.Son noyau n'a qu'un seul proton et son isotope principal est même dénué de neutron (un cas unique) ce qui fait de l'atome d'hydrogène le plus simple, le plus petit et le plus léger des atomes",
 
@@ -30,7 +30,7 @@ export default [
     }
   },
   {
-    name: "Oxygene",
+    name: "Oxygène",
     descriptions: [
       "L'oxygène est le troisième élément chimique le plus abondant de l'univers (après l'hydrogène et l'hélium). Sur Terre, il est présent combiné à divers éléments, sous forme d'oxydes minéraux ou au sein de fonctions chimiques des composés organiques (alcool, cétone, acide carboxylique...). Il est présent dans l'air sous forme de dioxygène, dans l'eau combiné avec l'hydrogène et les composés biologiques. Il est vital pour la plupart des organismes vivants sur terre.",
 
@@ -42,6 +42,66 @@ export default [
       neutrons: 8,
       protons: 8,
       electrons: 8
+    }
+  },
+  {
+    name: "Azote",
+    descriptions: [
+      "L'azote est l'élément chimique de numéro atomique 7, de symbole N (du latin nitrogenium). C'est la tête de file du groupe des pnictogènes. Les minéraux contenant de l'azote sont essentiellement les nitrates, notamment le nitrate de potassium et le nitrate de sodium.",
+
+      "Il forme des composés avec de nombreux autres éléments chimiques et est présent dans des composés organiques et inorganiques. L'azote est présent dans la fonction amine et est l’élément constitutif principal des acides aminés, qui constituent eux-mêmes toutes les protéines du monde vivant.",
+
+      "Sous sa forme moléculaire (le diazote), l'azote est le composant majoritaire de l'atmosphère terrestre (78% en volume et 75,5% en masse)."
+    ],
+    structure: {
+      neutrons: 7,
+      protons: 7,
+      electrons: 7
+    }
+  },
+  {
+    name: "Fer",
+    descriptions: [
+      "Le fer est le 6ième élément le plus abondant dans l'Univers, et le 4ième des éléments les plus abondants dans la croûte terrestre. Le fer (isotope stable Fe<up>56) est l'élément le plus lourd issu de la nucléosynthèse stellaire.",
+
+      "C'est également le métal le plus abondant dans les météorites ainsi que dans le noyau des planètes, comme dans celui de la Terre. Une grande partie du fer de la croûte terrestre est combinée avec l'oxygène, formant des minerais d'oxyde de fer, tels que l'hématite, la magnétite (oxyde magnétique), la limonite.",
+
+      "Le fer, tout en étant malléable et ductile, est le plus dur des métaux usuels, par l'adjonction de faibles quantités d'impuretés. Il a de très nombreuses également  sous forme d'alliages"
+    ],
+    structure: {
+      neutrons: 30,
+      protons: 26,
+      electrons: 26
+    }
+  },
+  {
+    name: "Sodium",
+    descriptions: [
+      "Le sodium est très abondant dans la nature sous forme de chlorure ; il est présent dans la structure de minéraux des roches magmatiques, surtout de ceux qui se forment en fin de cristallisation .",
+
+      "Par la suite il passera facilement en solution dans les eaux lacustres ou marines (le sodium est présent en moyenne à 1,06 % dans l'eau de mer) ; ultérieurement, il pourra se déposer dans les séries d'évaporites.",
+
+      "Il a de nombreuses utilisations, notamment dans l'industrie, le salage des routes en hiver et l'agro-alimentaire"
+    ],
+    structure: {
+      neutrons: 12,
+      protons: 11,
+      electrons: 11
+    }
+  },
+  {
+    name: "Soufre",
+    descriptions: [
+      "Le soufre se forme au sein d'environnements volcaniques, soit en dépôts directement issus de fumerolles sulfureuses, soit par oxydation partielle de l'hydrogène sulfuré des gaz de ces mêmes fumerolles.",
+
+      "Il se trouve naturellement en grande quantité, avec d'autres éléments sous forme de sulfures, de sulfates et sous forme libre généralement dans les gaz volcaniques, au niveau des sources chaudes, les fumerolles.",
+
+      "Le soufre est une matière première de la fabrication de l'acide sulfurique, d'insecticides, d'engrais chimiques ; utilisé dans la vulcanisation du caoutchouc, dans l'industrie pétrolière, dans celle du papier."
+    ],
+    structure: {
+      neutrons: 16,
+      protons: 16,
+      electrons: 16
     }
   }
 ]
