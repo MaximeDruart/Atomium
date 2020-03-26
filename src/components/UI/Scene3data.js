@@ -14,15 +14,10 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        { size: 4, position: new THREE.Vector3(0, 0, 0) },
-        { size: 2, position: new THREE.Vector3(-6, 1, -3) }
+        { size: 3, position: new THREE.Vector3(0, 0, 0) },
+        { size: 1.8, position: new THREE.Vector3(-6, 1, -3) }
       ],
-      [
-        {
-          origin: 0,
-          end: 1
-        }
-      ]
+      [{ origin: 0, end: 1 }]
     )
   },
   {
@@ -36,28 +31,13 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        {
-          size: 2,
-          position: new THREE.Vector3(5, -2, 2)
-        },
-        {
-          size: 2,
-          position: new THREE.Vector3(-6, 1, -3)
-        },
-        {
-          size: 2,
-          position: new THREE.Vector3(-1, -3, 6)
-        }
+        { size: 2.6, position: new THREE.Vector3(5, -2, 2) },
+        { size: 2, position: new THREE.Vector3(-6, 1, -3) },
+        { size: 2, position: new THREE.Vector3(-1, -3, 6) }
       ],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        }
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 }
       ]
     )
   },
@@ -72,28 +52,13 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        {
-          size: 2,
-          position: new THREE.Vector3(-7, 4, -1)
-        },
-        {
-          size: 2,
-          position: new THREE.Vector3(5, -3, -2)
-        },
-        {
-          size: 2,
-          position: new THREE.Vector3(-1, -3, 6)
-        }
+        { size: 3, position: new THREE.Vector3(-7, 4, -1) },
+        { size: 2.1, position: new THREE.Vector3(5, -3, -2) },
+        { size: 2.1, position: new THREE.Vector3(-1, -3, 6) }
       ],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        }
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 }
       ]
     )
   },
@@ -108,11 +73,11 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        { size: 2, position: new THREE.Vector3(0, 0, 0) },
-        { size: 2, position: new THREE.Vector3(-6, 1, -1) },
-        { size: 2, position: new THREE.Vector3(7, -2, 1) },
-        { size: 2, position: new THREE.Vector3(-3, -7, 1) },
-        { size: 2, position: new THREE.Vector3(2, 5, -1) }
+        { size: 2.5, position: new THREE.Vector3(0, 0, 0) },
+        { size: 1.3, position: new THREE.Vector3(-6, 1, -1) },
+        { size: 1.3, position: new THREE.Vector3(7, -2, 1) },
+        { size: 1.3, position: new THREE.Vector3(-3, -7, 1) },
+        { size: 1.3, position: new THREE.Vector3(2, 5, -1) }
       ],
       [
         { origin: 0, end: 1 },
