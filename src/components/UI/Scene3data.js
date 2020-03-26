@@ -4,7 +4,7 @@ const mol = new Molecule()
 
 export default [
   {
-    name: "dioxygene O²",
+    name: "Dioxygene O²",
     descriptions: [
       "Le dioxygène ou oxygène moléculaire est la forme de l'oxygène trouvé dans l'air. C'est une molécule constituée par l'assemblage de deux atomes d'oxygène et a donc la formule O2.",
 
@@ -14,14 +14,14 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        { size: 3, position: new THREE.Vector3(0, 0, 0) },
-        { size: 1.8, position: new THREE.Vector3(-6, 1, -3) }
+        { size: 3, position: new THREE.Vector3(3, 0, 0) },
+        { size: 3, position: new THREE.Vector3(-4, 1, -3) }
       ],
       [{ origin: 0, end: 1 }]
     )
   },
   {
-    name: "dioxyde de carbone CO2",
+    name: "Dioxyde de carbone CO2",
     descriptions: [
       "Le dioxyde de carbone, parfois appelé gaz carbonique, est un gaz dont la molécule est formée d'un atome de carbone et de deux atomes d'oxygène. Sa formule est CO2.",
 
@@ -42,7 +42,7 @@ export default [
     )
   },
   {
-    name: "eau H20",
+    name: "Eau H20",
     descriptions: [
       "La molécule d'eau a pour formule H2O, c'est-à-dire qu'elle est composée d'un atome d'oxygène et de deux atomes d'hydrogène. Si on veut parler de deux molécules d’eau, on écrit alors 2H2O.",
 
@@ -63,7 +63,7 @@ export default [
     )
   },
   {
-    name: "méthane CH4",
+    name: "Méthane CH4",
     descriptions: [
       "Le méthane est une molécule composée d'un atome de carbone et de quatre atomes d'hydrogène : sa formule brute est donc CH4.",
 
@@ -98,51 +98,27 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        new THREE.Vector3(4, 0, 0), // atome centrale
-        new THREE.Vector3(-2, 1, -1), // atome a droite
-        new THREE.Vector3(11, 5, 3), // atoem gauche
-        new THREE.Vector3(8, -5, -3),
-        new THREE.Vector3(6, 2, -7), // atome 2
-        new THREE.Vector3(-8, 7, 1),
-        new THREE.Vector3( -7, -3, 2), // fond droit
-        new THREE.Vector3( -7, -1, -6),// proche droit
-        new THREE.Vector3( -13, 8, 1)
+        { size: 2.5, position: new THREE.Vector3(4, 0, 0)}, // atome centrale
+        { size: 2.5, position:new THREE.Vector3(-2, 1, -1)}, // atome a droite
+        { size: 1.5, position:new THREE.Vector3(11, 5, 3)}, // atoem gauche
+        { size: 1.5, position:new THREE.Vector3(8, -5, -3)},
+        { size: 1.5, position:new THREE.Vector3(6, 2, -7)}, // atome 2
+        { size: 2.5, position:new THREE.Vector3(-8, 7, 1)},
+        { size: 1.5, position:new THREE.Vector3( -7, -3, 2)}, // fond droit
+        { size: 1.5, position:new THREE.Vector3( -7, -1, -6)},// proche droit
+        { size: 1.5, position:new THREE.Vector3( -13, 8, 1)}
 
 
       ],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        },
-        {
-          origin: 0,
-          end: 3
-        },
-        {
-          origin: 0,
-          end: 4
-        },
-        {
-          origin: 1,
-          end: 5
-        },
-        {
-          origin: 1,
-          end: 6
-        },
-        {
-          origin: 1,
-          end: 7
-        },
-        {
-          origin: 5,
-          end: 8
-        }
+        {origin: 0, end:1},
+        {origin: 0,end: 2},
+        {origin: 0,end: 3},
+        {origin: 0,end: 4},
+        {origin: 1,end: 5},
+        {origin: 1,end: 6},
+        {origin: 1,end: 7},
+        {origin: 5,end: 8},
       ]
     )
   }
