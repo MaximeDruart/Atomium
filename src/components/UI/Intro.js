@@ -50,7 +50,7 @@ const Intro = props => {
           ease: "Power3.easeInOut",
           duration: 1
         },
-        onStart: () => goToSecondTl.play()
+        onStart: () => goToSecondTl()
       })
       .addLabel("sync")
       .to($introContainer.current, { opacity: 0, duration: 1, ease: "Power3.easeInOut" })

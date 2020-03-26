@@ -55,6 +55,8 @@ const THREECanvas = () => {
         wireframe: true
       })
     )
+    // adding a name to the cube so later we can check if it's in the scene or not
+    cubeMesh.name = "cubeMesh"
 
     // molecule
     let molecules = []
@@ -124,7 +126,7 @@ const THREECanvas = () => {
 
     let atoms = getAtoms(150)
     let atomGroups = atoms.map(({ atomGroup }) => atomGroup)
-    // getting only the first atom, the one who's gonna stay on the screen for the 2nd scene.
+    // all atoms but the first whos going to stay for scene 2
     let atomGroupsButFirst = atomGroups.slice(1)
 
     let introSpawnTl = gsap
@@ -149,57 +151,52 @@ const THREECanvas = () => {
         "sync"
       )
 
-    let goToSecondTl = gsap
-      .timeline({
-        paused: true,
-        defaults: {
-          ease: "Power2.easeOut",
-          duration: 4
-        },
-        onStart: () => {
-          rotateCamera = false
-          introSpawnTl.kill()
-          cubeMesh.scale.set(0.01, 0.01, 0.01)
-          scene.add(cubeMesh)
+    const goToSecondTl = () => {
+      gsap
+        .timeline({
+          defaults: {
+            ease: "Power2.easeOut",
+            duration: 4
+          },
+          onStart: () => {
+            rotateCamera = false
+            introSpawnTl.kill()
+            cubeMesh.scale.set(0.01, 0.01, 0.01)
+            scene.add(cubeMesh)
 
-          // kinda hacky but else its too long to wait for all atoms to despawn
-          // on complete :
-          setTimeout(() => {
-            controls = new ABSOLUTELYNOTORBITCONTROLS(camera, renderer.domElement)
-            controls.enableDamping = true
-            controls.enablePan = false
-            controls.maxDistance = 35
-            controls.minDistance = 5
-            controls.dampingFactor = 0.05
-            atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
-            updateContext("activeScene", 1)
-            atoms = atoms.slice(0, 1)
-          }, 2500)
-        }
-      })
-      .addLabel("sync")
-      .to(
-        atomGroupsButFirst,
-        {
-          duration: 0.5,
-          three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
-          stagger: 0.01
-        },
-        "sync"
-      )
-      .to(
-        camera.position,
-        {
-          duration: 2,
-          onUpdate: () => camera.lookAt(scene.position),
-          x: scene.position.x,
-          y: scene.position.y,
-          z: scene.position.z - 12
-        },
-        "sync"
-      )
-      .to(rotateSpeed, { value: 0 }, "sync")
-      .to(cubeMesh.scale, 2, { x: 1, y: 1, z: 1 }, "sync")
+            // kinda hacky but else its too long to wait for all atoms to despawn
+            // on complete :
+            setTimeout(() => {
+              atomGroupsButFirst.forEach(atom => atomsSceneGroup.remove(atom))
+              updateContext("activeScene", 1)
+              atoms = atoms.slice(0, 1)
+            }, 2500)
+          }
+        })
+        .addLabel("sync")
+        .to(
+          atomGroupsButFirst,
+          {
+            duration: 0.5,
+            three: { scaleX: 0.01, scaleY: 0.01, scaleZ: 0.01 },
+            stagger: 0.01
+          },
+          "sync"
+        )
+        .to(
+          camera.position,
+          {
+            duration: 2,
+            onUpdate: () => camera.lookAt(scene.position),
+            x: scene.position.x,
+            y: scene.position.y,
+            z: scene.position.z - 12
+          },
+          "sync"
+        )
+        .to(rotateSpeed, { value: 0 }, "sync")
+        .to(cubeMesh.scale, 2, { x: 1, y: 1, z: 1 }, "sync")
+    }
 
     const switchAtom = ({ protons, neutrons, electrons }) => {
       // the only child with children at the moment this function is executed is the atom group.
@@ -240,17 +237,41 @@ const THREECanvas = () => {
     }
 
     const clearSceneOfGroups = () => {
-      scene.children.forEach((children, index, scene) => {
+      scene.children.forEach(children => {
         children.children.length > 0 && scene.remove(children)
       })
     }
 
+    const toggleCube = isTrue =>
+      isTrue ? !scene.getObjectByName("cubeMesh") && scene.add(cubeMesh) : scene.remove(cubeMesh)
+
+    const toggleControls = isTrue => {
+      if (isTrue) {
+        rotateCamera = false
+        controls = new ABSOLUTELYNOTORBITCONTROLS(camera, renderer.domElement)
+        controls.enableDamping = true
+        controls.enablePan = false
+        controls.maxDistance = 35
+        controls.minDistance = 5
+        controls.dampingFactor = 0.05
+      } else controls = null
+    }
+
     // passing these functions to context so they can be accessed from the scenes.
-    updateContext("switchAtom", switchAtom)
+
+    // scene transitions
     updateContext("introSpawnTl", introSpawnTl)
     updateContext("goToSecondTl", goToSecondTl)
-    updateContext("clearAtomsAnimated", clearAtomsAnimated)
+
+    // scene specifics
+    updateContext("switchAtom", switchAtom)
     updateContext("switchMolecule", switchMolecule)
+
+    // utils
+    updateContext("clearAtomsAnimated", clearAtomsAnimated)
+    updateContext("clearSceneOfGroups", clearSceneOfGroups)
+    updateContext("toggleControls", toggleControls)
+    updateContext("toggleCube", toggleCube)
 
     /**
      * Lights

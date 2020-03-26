@@ -9,7 +9,7 @@ import gsap from "gsap"
 const Scene3 = () => {
   const $scene3 = useRef(null)
   const [activeMolecule, setActiveMolecule] = useState(0)
-  const { updateContext, switchMolecule } = useContext(Context)
+  const { toggleControls, switchMolecule, toggleCube } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
 
   const changeMolecule = val => {
@@ -24,6 +24,8 @@ const Scene3 = () => {
   }, [activeMolecule])
 
   useEffect(() => {
+    toggleCube(true)
+    toggleControls(true)
     gsap.from($scene3.current, 0.8, { opacity: 0 })
   }, [])
 
