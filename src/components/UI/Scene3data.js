@@ -115,22 +115,10 @@ export default [
         { size: 2, position: new THREE.Vector3(2, 5, -1) }
       ],
       [
-        {
-          origin: 0,
-          end: 1
-        },
-        {
-          origin: 0,
-          end: 2
-        },
-        {
-          origin: 0,
-          end: 3
-        },
-        {
-          origin: 0,
-          end: 4
-        }
+        { origin: 0, end: 1 },
+        { origin: 0, end: 2 },
+        { origin: 0, end: 3 },
+        { origin: 0, end: 4 }
       ]
     )
   }
