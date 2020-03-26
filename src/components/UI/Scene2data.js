@@ -43,5 +43,20 @@ export default [
       protons: 8,
       electrons: 8
     }
+  },
+  {
+    name: "Azote",
+    descriptions: [
+      "L'azote est un élément chimique simple de symbole N. On utilise aussi le nom d'azote pour désigner le diazote, qui est un gaz formé par la liaison de deux atomes d'azote entre eux.",
+
+      "Le diazote, appelé couramment azote (comme pour l'oxygène et le dioxygène), est le principal composant gazeux de l'atmosphère. Il compose environ 78% de l'atmosphère.",
+
+      "À la pression de l'atmosphère à la surface de la Terre, l'azote devient liquide à une température de l'ordre de -196 °C. Au-dessus de cette température, c'est un gaz."
+    ],
+    structure: {
+      neutrons: 7,
+      protons: 7,
+      electrons: 7
+    }
   }
 ]
