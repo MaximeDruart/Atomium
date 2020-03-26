@@ -13,7 +13,8 @@ export default class Molecule {
   getMolecule = (atomsArray, linksArray) => {
     const group = new THREE.Group()
     const atoms = atomsArray.map(atom => {
-      const atomMesh = this.getAtom(atom)
+      // error handling for previous version where atom wasn't an object
+      const atomMesh = atom.size ? this.getAtom(atom.size, atom.position) : this.getAtom(this.atomSize, atom)
       group.add(atomMesh)
       return atomMesh
     })
@@ -54,8 +55,8 @@ export default class Molecule {
     atomLink.scale.y = distanceBetweenAtoms
   }
 
-  getAtom = ({ x, y, z }) => {
-    const mesh = new THREE.Mesh(this.sphereGeometry, this.wfMaterial)
+  getAtom = (size = 2, { x, y, z }) => {
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 8, 8), this.wfMaterial)
     mesh.position.set(x, y, z)
     return mesh
   }
