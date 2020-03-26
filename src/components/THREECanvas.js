@@ -348,7 +348,7 @@ const THREECanvas = () => {
       }
 
       connectAtoms = (atom1, atom2) => {
-        let moleculeGroup = new THREE.Group()
+        // let moleculeGroup = new THREE.Group()
         const linkMesh = this.getLink()
         const link = {
           mesh: linkMesh,
@@ -359,14 +359,15 @@ const THREECanvas = () => {
         const atom1obj = { mesh: atom1, size: atom1.userData.size }
         const atom2obj = { mesh: atom2, size: atom2.userData.size }
         atom2.material.color.set(atom2.userData.color)
-        moleculeGroup.add(atom1, atom2, linkMesh)
+        // moleculeGroup.add(atom1, atom2, linkMesh)
         const moleculeRaw = {
           atom1: atom1obj,
           atom2: atom2obj,
-          link,
-          group: moleculeGroup
+          link
+          // group: moleculeGroup
         }
-        this.group.add(moleculeGroup)
+        scene.add(linkMesh)
+        // this.group.add(moleculeGroup)
         this.molecules.push(moleculeRaw)
       }
 
@@ -418,7 +419,8 @@ const THREECanvas = () => {
 
     const animate = function(t) {
       // keeping molecules links updated
-      game.molecules[0] && console.log(game.molecules[0])
+
+      //
       for (let i = 0; i < game.molecules.length; i++) {
         mol.setLinkCoords(
           game.molecules[i].atom1.mesh,
@@ -428,19 +430,7 @@ const THREECanvas = () => {
           game.molecules[i].atom2.size
         )
       }
-      // game.molecules.forEach(molecule => {
-      //   molecule.links.forEach(link => {
-      //     mol.setLinkCoords(
-      //       molecule.atoms[link.origin].mesh,
-      //       molecule.atoms[link.end].mesh,
-      //       link.mesh,
-      //       molecule.atoms[link.origin].size,
-      //       molecule.atoms[link.end].size
-      //     )
-      //   })
-      // })
 
-      console.log("animating")
       molecules.forEach(molecule => {
         molecule.links.forEach(link => {
           mol.setLinkCoords(
@@ -463,13 +453,6 @@ const THREECanvas = () => {
           atom.electronTrailsMeshes
         )
       )
-
-      // raycasting
-      // if (game.isRaycasting) {
-      //   game.raycaster.setFromCamera(game.mousePos, camera)
-      //   let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
-      //   for (var i = 0; i < intersects.length; i++) {}
-      // }
 
       // camera movements
       controls && controls.update()
