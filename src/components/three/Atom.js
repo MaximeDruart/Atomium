@@ -48,7 +48,7 @@ export default class Atom {
       wireframe: true,
       transparent: true,
       color: 0x666666,
-      opacity: 0.1,
+      opacity: 0.3,
       side: THREE.DoubleSide
     })
 
