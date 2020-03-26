@@ -52,7 +52,7 @@ const Scene2 = () => {
         Atome précédent
       </div>
       <div onClick={goToScene3} className="mf-active next">
-        SUITE
+        Découvrir les molécules
       </div>
       <div onClick={() => changeAtom(1)} className="mf-active button next-atom">
         Atome suivant
