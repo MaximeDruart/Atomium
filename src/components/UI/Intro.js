@@ -22,8 +22,8 @@ const introTexts = [
   }
 ]
 
-const Intro = props => {
-  const { updateContext, introSpawnTl, goToSecondTl } = useContext(Context)
+const Intro = () => {
+  const { toggleCube, introSpawnTl, goToSecondTl } = useContext(Context)
   const [textIndex, setTextIndex] = useState(0)
   const $introContainer = useRef(null)
   const $textContainer = useRef(null)
@@ -62,11 +62,12 @@ const Intro = props => {
       setTimeout(() => {
         gsap.timeline().to($introContainer.current, 1, { ease: "Power3.easeInOut", opacity: 1 })
       }, 3500)
+    toggleCube && toggleCube(false)
     if (introSpawnTl) {
       introSpawnTl.eventCallback("onStart", spawnText)
       introSpawnTl.restart()
     }
-  }, [introSpawnTl])
+  }, [introSpawnTl, toggleCube])
 
   const getMappedTexts = useCallback(
     () =>

@@ -32,6 +32,7 @@ const Scene2 = () => {
   }, [activeAtom])
 
   useEffect(() => {
+    switchAtom(scene2data[activeAtom].structure)
     toggleControls(true)
     toggleCube(true)
     setIsFirstRender(false)

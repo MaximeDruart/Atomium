@@ -9,9 +9,11 @@ const Header = () => {
       new Array(4).fill(0).map((_, index) => (
         <span
           onClick={() => {
-            toggleControls(false)
-            clearSceneOfGroups()
-            updateContext("activeScene", index)
+            if (activeScene !== index) {
+              clearSceneOfGroups()
+              toggleControls(false)
+              updateContext("activeScene", index)
+            }
           }}
           key={index}
           className={activeScene === index ? "mf-active header-link active" : "mf-active header-link"}>

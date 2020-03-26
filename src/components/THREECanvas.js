@@ -58,16 +58,40 @@ const THREECanvas = () => {
     // adding a name to the cube so later we can check if it's in the scene or not
     cubeMesh.name = "cubeMesh"
 
+    const adjustCamForMoleculeTl = forward => {
+      let tl = gsap.timeline().addLabel("sync")
+      if (forward) {
+        tl.to(camera.position, 0.3, { z: -20 }, "sync")
+        tl.to(
+          cubeMesh.scale,
+          0.3,
+          {
+            x: cubeMesh.scale.x * 1.95,
+            y: cubeMesh.scale.y * 1.95,
+            z: cubeMesh.scale.z * 1.95
+          },
+          "sync"
+        )
+      } else {
+        tl.to(camera.position, 0.3, { z: -10 }, "sync")
+        tl.to(
+          cubeMesh.scale,
+          0.3,
+          {
+            x: 1,
+            y: 1,
+            z: 1
+          },
+          "sync"
+        )
+      }
+    }
+
     // molecule
     let molecules = []
     const switchMolecule = molecule => {
-      molecules.length === 0 && gsap.to(camera.position, 0.3, { z: camera.position.z - 10 })
-      molecules.length === 0 &&
-        gsap.to(cubeMesh.scale, 0.3, {
-          x: cubeMesh.scale.x * 1.95,
-          y: cubeMesh.scale.y * 1.95,
-          z: cubeMesh.scale.z * 1.95
-        })
+      // if molecules.length === 0, meaning that it's the first molecule to spawn and we need to adjust the camera coming from scene 2
+      // molecules.length === 0 && adjustCamForMoleculeTl.play()
       let switchMolTl = gsap.timeline({
         defaults: { duration: 0.4 }
       })
@@ -201,30 +225,33 @@ const THREECanvas = () => {
     const switchAtom = ({ protons, neutrons, electrons }) => {
       // the only child with children at the moment this function is executed is the atom group.
       let atomChild = scene.children.filter(child => child.children.length > 0)[0]
-      gsap.to(atomChild.scale, 0.4, {
-        ease: "Power3.easeIn",
-        x: 0.01,
-        y: 0.01,
-        z: 0.01,
-        onComplete: () => {
-          // removing atom and creating a new one.
-          scene.remove(atomChild)
-          const atom = new Atom({ scene, protons, neutrons, electrons, atomRadius: 2 }).getAtom()
-          scene.add(atom.atomGroup)
-          atoms.push(atom)
-          gsap.fromTo(
-            atom.atomGroup.scale,
-            { x: 0.01, y: 0.01, z: 0.01 },
-            {
-              ease: "Power3.easeOut",
-              duration: 0.4,
-              x: 1,
-              y: 1,
-              z: 1
-            }
-          )
+
+      console.log(scene.children)
+      console.log(atomChild)
+      let switchAtomTl = gsap.timeline({ onComplete: () => console.log(scene.children), defaults: { duration: 0.4 } })
+      atomChild &&
+        switchAtomTl.to(atomChild.scale, 0.4, {
+          ease: "Power3.easeIn",
+          x: 0.01,
+          y: 0.01,
+          z: 0.01,
+          onComplete: () => scene.remove(atomChild)
+        })
+      // atomChild
+      const atom = new Atom({ scene, protons, neutrons, electrons, atomRadius: 2 }).getAtom()
+      scene.add(atom.atomGroup)
+      atoms.push(atom)
+      switchAtomTl.fromTo(
+        atom.atomGroup.scale,
+        { x: 0.01, y: 0.01, z: 0.01 },
+        {
+          ease: "Power3.easeOut",
+          duration: 0.4,
+          x: 1,
+          y: 1,
+          z: 1
         }
-      })
+      )
     }
 
     const clearAtomsAnimated = () => {
@@ -247,13 +274,15 @@ const THREECanvas = () => {
 
     const toggleControls = isTrue => {
       if (isTrue) {
-        rotateCamera = false
-        controls = new ABSOLUTELYNOTORBITCONTROLS(camera, renderer.domElement)
-        controls.enableDamping = true
-        controls.enablePan = false
-        controls.maxDistance = 35
-        controls.minDistance = 5
-        controls.dampingFactor = 0.05
+        if (!controls) {
+          rotateCamera = false
+          controls = new ABSOLUTELYNOTORBITCONTROLS(camera, renderer.domElement)
+          controls.enableDamping = true
+          controls.enablePan = false
+          controls.maxDistance = 35
+          controls.minDistance = 5
+          controls.dampingFactor = 0.05
+        }
       } else controls = null
     }
 
@@ -272,6 +301,7 @@ const THREECanvas = () => {
     updateContext("clearSceneOfGroups", clearSceneOfGroups)
     updateContext("toggleControls", toggleControls)
     updateContext("toggleCube", toggleCube)
+    updateContext("adjustCamForMoleculeTl", adjustCamForMoleculeTl)
 
     /**
      * Lights
