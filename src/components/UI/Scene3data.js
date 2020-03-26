@@ -14,7 +14,7 @@ export default [
     ],
     molecule: mol.getMolecule(
       [
-        { size: 2, position: new THREE.Vector3(0, 0, 0) },
+        { size: 4, position: new THREE.Vector3(0, 0, 0) },
         { size: 2, position: new THREE.Vector3(-6, 1, -3) }
       ],
       [

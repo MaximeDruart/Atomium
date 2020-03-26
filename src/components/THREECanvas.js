@@ -321,7 +321,13 @@ const THREECanvas = () => {
     const animate = function(t) {
       molecules.forEach(molecule => {
         molecule.links.forEach(link => {
-          mol.setLinkCoords(molecule.atoms[link.origin], molecule.atoms[link.end], link.mesh, mol.atomSize)
+          mol.setLinkCoords(
+            molecule.atoms[link.origin].mesh,
+            molecule.atoms[link.end].mesh,
+            link.mesh,
+            molecule.atoms[link.origin].size,
+            molecule.atoms[link.end].size
+          )
         })
       })
 
