@@ -7,6 +7,7 @@
   * {
     font-family: "Quicksand-normal";
     z-index: 11;
+    user-select: none;
   }
   .title {
     .number {
@@ -79,7 +80,6 @@
     color: $gold-color;
     border-radius: 50%;
     &::after {
-      
     }
   }
 

@@ -9,8 +9,7 @@ const introTexts = [
   },
   {
     title: "Qu'est ce qu'une molécule ?",
-    body:
-      "Une molécule est une particule microscopique qui naît d’un  regroupement d'atomes. "
+    body: "Une molécule est une particule microscopique qui naît d’un  regroupement d'atomes. "
   },
   {
     title: "Et un atome alors ?",
@@ -36,15 +35,9 @@ const Intro = props => {
       let newValue = gsap.utils.clamp(0, introTexts.length - 1, textIndex + scrollValue)
       let actualTime = Date.now()
       if (actualTime - timeSinceLastChange > 1000 && scrollValue !== 0) {
-        // setTimeSinceLastChange(Date.now())
-        // textIndex !== newValue &&
-        //   gsap.from($textContainer.current, { duration: 0.9, ease: "Power3.easeInOut", opacity: 0 })
-
         setTimeSinceLastChange(Date.now())
         textIndex !== newValue &&
           gsap.timeline().fromTo($textContainer.current, { opacity: 0 }, { opacity: 1, duration: 1.5 })
-
-        // textIndex === introTexts.length && goToNext()
         return newValue
       } else return textIndex
     })
@@ -71,7 +64,7 @@ const Intro = props => {
       }, 3500)
     if (introSpawnTl) {
       introSpawnTl.eventCallback("onStart", spawnText)
-      introSpawnTl.play()
+      introSpawnTl.restart()
     }
   }, [introSpawnTl])
 
