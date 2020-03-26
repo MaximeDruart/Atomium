@@ -7,20 +7,21 @@ import gsap from "gsap"
 
 const Scene2 = () => {
   const $scene2 = useRef(null)
-  const { updateContext, activeScene2Atom, switchAtom, clearAtomsAnimated, $background, $canvas } = useContext(Context)
+  const [activeAtom, setActiveAtom] = useState(0)
+  const { updateContext, switchAtom, clearAtomsAnimated, $background, $canvas } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   const changeAtom = val => {
-    let newVal = gsap.utils.clamp(0, scene2data.length - 1, activeScene2Atom + val)
-    newVal !== activeScene2Atom && updateContext("activeScene2Atom", newVal)
+    let newVal = gsap.utils.clamp(0, scene2data.length - 1, activeAtom + val)
+    newVal !== activeAtom && setActiveAtom(newVal)
   }
 
   useEffect(() => {
-    !isFirstRender && switchAtom(scene2data[activeScene2Atom].structure)
+    !isFirstRender && switchAtom(scene2data[activeAtom].structure)
     setActiveDescription(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeScene2Atom])
+  }, [activeAtom])
 
   useEffect(() => {
     setIsFirstRender(false)
@@ -46,17 +47,21 @@ const Scene2 = () => {
         <span className="number">02.</span>Les principaux atomes
       </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
-      <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>
-      <div className="atom-name">{scene2data[activeScene2Atom].name}</div>
-      <div onClick={() => changeAtom(-1)} className="mf-active button previous-atom">
-        Atome précédent
-      </div>
+      <div className="description">{scene2data[activeAtom].descriptions[activeDescription]}</div>
+      <div className="atom-name">{scene2data[activeAtom].name}</div>
+      {activeAtom > 0 && (
+        <div onClick={() => changeAtom(-1)} className="mf-active button previous-atom">
+          Atome précédent
+        </div>
+      )}
       <div onClick={goToScene3} className="mf-active next">
         Découvrir les molécules
       </div>
-      <div onClick={() => changeAtom(1)} className="mf-active button next-atom">
-        Atome suivant
-      </div>
+      {activeAtom < scene2data.length - 1 && (
+        <div onClick={() => changeAtom(1)} className="mf-active button next-atom">
+          Atome suivant
+        </div>
+      )}
     </div>
   )
 }

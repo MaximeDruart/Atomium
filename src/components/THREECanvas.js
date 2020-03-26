@@ -35,11 +35,11 @@ const THREECanvas = () => {
     let rotateSpeed = { value: 0.008 }
     let rotateCamera = false
 
-    var axesHelper = new THREE.AxesHelper(5)
-    scene.add(axesHelper)
+    // const axesHelper = new THREE.AxesHelper(5)
+    // scene.add(axesHelper)
 
-    var gridHelper = new THREE.GridHelper(100, 100)
-    scene.add(gridHelper)
+    // const gridHelper = new THREE.GridHelper(100, 100)
+    // scene.add(gridHelper)
 
     /**
      * Objects

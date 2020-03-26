@@ -6,9 +6,7 @@ class ContextProvider extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeScene: 0,
-      activeScene2Atom: 0,
-      activeScene3Molecule: 0
+      activeScene: 0
     }
   }
 

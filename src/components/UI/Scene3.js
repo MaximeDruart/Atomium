@@ -8,19 +8,20 @@ import gsap from "gsap"
 
 const Scene3 = () => {
   const $scene3 = useRef(null)
-  const { updateContext, activeScene3Molecule, switchMolecule } = useContext(Context)
+  const [activeMolecule, setActiveMolecule] = useState(0)
+  const { updateContext, switchMolecule } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
 
   const changeMolecule = val => {
-    let newVal = gsap.utils.clamp(0, scene3data.length - 1, activeScene3Molecule + val)
-    newVal !== activeScene3Molecule && updateContext("activeScene3Molecule", newVal)
+    let newVal = gsap.utils.clamp(0, scene3data.length - 1, activeMolecule + val)
+    newVal !== activeMolecule && setActiveMolecule(newVal)
   }
 
   useEffect(() => {
-    switchMolecule(scene3data[activeScene3Molecule].molecule)
+    switchMolecule(scene3data[activeMolecule].molecule)
     setActiveDescription(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeScene3Molecule])
+  }, [activeMolecule])
 
   useEffect(() => {
     gsap.from($scene3.current, 0.8, { opacity: 0 })
@@ -32,14 +33,18 @@ const Scene3 = () => {
         <span className="number">03.</span> Les molécules
       </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
-      <div className="description">{scene3data[activeScene3Molecule].descriptions[activeDescription]}</div>
-      <div className="atom-name">{scene3data[activeScene3Molecule].name}</div>
-      <div onClick={() => changeMolecule(-1)} className="mf-active button previous-atom previous-Molecule">
-        Molécule précédente
-      </div>
-      <div onClick={() => changeMolecule(1)} className="mf-active button next-atom next-Molecule">
-        Molécule suivante
-      </div>
+      <div className="description">{scene3data[activeMolecule].descriptions[activeDescription]}</div>
+      <div className="atom-name">{scene3data[activeMolecule].name}</div>
+      {activeMolecule > 0 && (
+        <div onClick={() => changeMolecule(-1)} className="mf-active button previous-atom previous-Molecule">
+          Molécule précédente
+        </div>
+      )}
+      {activeMolecule < scene3data.length - 1 && (
+        <div onClick={() => changeMolecule(1)} className="mf-active button next-atom next-Molecule">
+          Molécule suivante
+        </div>
+      )}
     </div>
   )
 }
