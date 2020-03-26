@@ -43,7 +43,7 @@ const Scene2 = () => {
   return (
     <div ref={$scene2} className="scene-2">
       <div className="title">
-        <span className="number">02.</span>Les 3 principaux atomes
+        <span className="number">02.</span>Les principaux atomes
       </div>
       <Timeline activeData={activeDescription} activeDataHandler={setActiveDescription} />
       <div className="description">{scene2data[activeScene2Atom].descriptions[activeDescription]}</div>

@@ -121,5 +121,16 @@ export default [
         {origin: 5,end: 8},
       ]
     )
-  }
+  },
+  {
+    name: "L'éthanol",
+    descriptions: [
+      "L'éthanol, ou alcool éthylique Écouter (ou plus simplement alcool), est un alcool de formule semi-développée CH3-CH2-OH",
+
+      "C'est un psychotrope, et l'une des plus anciennes drogues récréatives, sous la forme de boisson alcoolisée.",
+
+      "L'éthanol est utilisé par l'industrie agroalimentaire (pour la production de spiritueux notamment), la parfumerie et la pharmacie galénique (comme solvant) ainsi qu'en biocarburant (bioéthanol). Il est en outre utilisé dans les thermomètres à alcool."
+    ],
+
+  },
 ]
