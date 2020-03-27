@@ -31,16 +31,17 @@ const Scene4 = () => {
       <div className="title">Assemble les atomes et découvre des molécules !</div>
       <div className="controls">
         <div className="molecules">
-          <div onClick={() => game.createSimpleAtom(3, "black")} className="molecule">
+          <div onClick={() => game.createSimpleAtom(3, "black")} className="button mf-active molecule">
             Carbone
           </div>
-          <div onClick={() => game.createSimpleAtom(1, "white")} className="molecule">
+          <div onClick={() => game.createSimpleAtom(1, "white")} className="button mf-active molecule">
             Hydrogène
           </div>
-          <div onClick={() => game.createSimpleAtom(2, "blue")} className="molecule">
+          <div onClick={() => game.createSimpleAtom(2, "blue")} className="button mf-active molecule">
             Oxygène
           </div>
         </div>
+        <div className="button mf-active clear">Clear</div>
       </div>
     </div>
   )
