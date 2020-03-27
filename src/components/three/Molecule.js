@@ -9,6 +9,7 @@ export default class Molecule {
     })
   }
 
+  // this function takes an array of atoms ( each atom containing position, color and size data) and an array of links ( each containing the mesh and indexes of the 2 atoms that it links.) and returns an object containing the mesh, atoms and links separated for animation.
   getMolecule = (atomsArray, linksArray) => {
     const group = new THREE.Group()
     const atoms = atomsArray.map(atom => {
@@ -36,6 +37,7 @@ export default class Molecule {
     return { group, atoms, links }
   }
 
+  // this function updates a link to match its two atoms parents.
   setLinkCoords = (atom1, atom2, atomLink, atomSize1, atomSize2) => {
     // atom.position is relative to the group but we need absolute positionings to calculate the distance between atoms and the lookAt vector.
     let atom1WorldPos = new THREE.Vector3().setFromMatrixPosition(atom1.matrixWorld)

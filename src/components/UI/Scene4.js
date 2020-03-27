@@ -4,7 +4,7 @@ import { Context } from "../../Context"
 import "./Scene4.scss"
 
 const Scene4 = () => {
-  const { updateContext, toggleControls, toggleCube, $background, $canvas, game, toggleHelp } = useContext(Context)
+  const { toggleControls, toggleCube, $background, $canvas, game, toggleHelp, clearSceneOfGroups } = useContext(Context)
   const $scene4 = useRef(null)
 
   useEffect(() => {
@@ -18,7 +18,12 @@ const Scene4 = () => {
     gsap.set($canvas.current, { zIndex: 10 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    return () => toggleHelp(false)
+    return () => {
+      toggleHelp(false)
+      game.clearEvents()
+      clearSceneOfGroups()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

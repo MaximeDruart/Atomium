@@ -9,21 +9,11 @@ const simplex = new SimplexNoise()
 export default class Atom {
   constructor({ scene, protons = 3, neutrons = 3, electrons = 5, atomRadius = 6, displayTrail = false }) {
     this.scene = scene
-    this.protons = {
-      count: protons,
-      size: atomRadius / 10
-    }
-    this.neutrons = {
-      count: neutrons,
-      size: atomRadius / 10
-    }
-    this.electrons = {
-      count: electrons,
-      size: atomRadius / 20
-    }
+    this.protons = { count: protons, size: atomRadius / 10 }
+    this.neutrons = { count: neutrons, size: atomRadius / 10 }
+    this.electrons = { count: electrons, size: atomRadius / 20 }
     this.atomRadius = atomRadius
-    // 7 is a randome value
-    this.coreRadius = atomRadius / 7
+    this.coreRadius = atomRadius / 7 // 7 is a randome value
     this.geoSegments = 8
 
     this.protonsGeometry = new THREE.SphereGeometry(this.protons.size, this.geoSegments, this.geoSegments)
@@ -31,19 +21,8 @@ export default class Atom {
     this.electronsGeometry = new THREE.SphereGeometry(this.electrons.size, this.geoSegments, this.geoSegments)
     this.atomOuterShellGeometry = new THREE.SphereGeometry(this.atomRadius, this.geoSegments, this.geoSegments)
 
-    this.wfMaterial = new THREE.MeshStandardMaterial({
-      wireframe: true,
-      // wireframeLinewidth: "",
-      // wireframeLinejoin: "",
-      // wireframeLinecap: "",
-      color: 0x000000
-    })
-
-    this.redWfMaterial = new THREE.MeshStandardMaterial({
-      wireframe: true,
-      color: 0x888888
-    })
-
+    this.wfMaterial = new THREE.MeshStandardMaterial({ wireframe: true, color: 0x000000 })
+    this.redWfMaterial = new THREE.MeshStandardMaterial({ wireframe: true, color: 0x888888 })
     this.transparentWfMaterial = new THREE.MeshStandardMaterial({
       wireframe: true,
       transparent: true,
@@ -64,6 +43,7 @@ export default class Atom {
   map = (n, start1, stop1, start2, stop2) => ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2
   ran = x => Math.random() * x - x / 2
 
+  // this function returns an object containing the mesh for the atom and differents subgroups
   getAtom = () => {
     const atomGroup = new THREE.Group()
     const coreGroup = new THREE.Group()
@@ -122,6 +102,8 @@ export default class Atom {
     }
   }
 
+  // executed each frame, rotates each electron around its axis in the center of the atom.
+  // tried to do a trail system but i couldn't make it work :/
   animateElectrons = (time, atomGroup, elecGroup, elecTrailsGeos, elecTrailsMeshes) => {
     // rotating the whole group. it feels kinda natural if the number of electrons is small.
     elecGroup.children.forEach((pivot, index) => {

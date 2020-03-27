@@ -26,7 +26,7 @@ const Header = () => {
     <div className="header">
       <img
         onClick={() => {
-          updateContext("activeScene", 0)
+          window.location.reload()
         }}
         src={logo}
         alt="logo"

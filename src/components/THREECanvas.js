@@ -56,6 +56,7 @@ const THREECanvas = () => {
     // adding a name to the cube so later we can check if it's in the scene or not
     cubeMesh.name = "cubeMesh"
 
+    // scaling down molecules with links is buggy so between scene 2 and 3 i'm actually dezooming the camera and upscaling the cube :D
     const adjustCamForMoleculeTl = forward => {
       let tl = gsap.timeline().addLabel("sync")
       if (forward) {
@@ -87,12 +88,9 @@ const THREECanvas = () => {
 
     // molecule
     let molecules = []
+    // switch between molecules in scene 3
     const switchMolecule = molecule => {
-      // if molecules.length === 0, meaning that it's the first molecule to spawn and we need to adjust the camera coming from scene 2
-      // molecules.length === 0 && adjustCamForMoleculeTl.play()
-      let switchMolTl = gsap.timeline({
-        defaults: { duration: 0.4 }
-      })
+      let switchMolTl = gsap.timeline({ defaults: { duration: 0.4 } })
       molecules.length > 0 &&
         switchMolTl.to(molecules[molecules.length - 1].group.scale, {
           ease: "Power3.easeIn",
@@ -120,9 +118,10 @@ const THREECanvas = () => {
       )
     }
 
-    // BALLS SCENE
+    // Intro scene with atoms everywhere
     const atomsSceneGroup = new THREE.Group()
     scene.add(atomsSceneGroup)
+    // returns an array of x atoms, the first atom will be a carbon atom in the center of the scene needed for transition from intro to scene 2
     const getAtoms = x => {
       const atoms = []
       for (let i = 0; i < x; i++) {
@@ -147,10 +146,12 @@ const THREECanvas = () => {
     }
 
     let atoms = getAtoms(150)
+    // extracting groups to allow for gsap animations
     let atomGroups = atoms.map(({ atomGroup }) => atomGroup)
     // all atoms but the first whos going to stay for scene 2
     let atomGroupsButFirst = atomGroups.slice(1)
 
+    // Intro spawn timeline : camera dolly to the center of the scene + atoms stagger spawn
     let introSpawnTl = gsap
       .timeline({
         paused: true,
@@ -173,6 +174,7 @@ const THREECanvas = () => {
         "sync"
       )
 
+    // transition to scene 2 : staggered scale down of all atoms but the first one, which is the the new camera focus point.
     const goToSecondTl = () => {
       gsap
         .timeline({
@@ -220,6 +222,7 @@ const THREECanvas = () => {
         .to(cubeMesh.scale, 2, { x: 1, y: 1, z: 1 }, "sync")
     }
 
+    // switch between atoms for scene 2 : atom scale down then is dismounted. next atom is created with parameters and appears with scale up.
     const switchAtom = ({ protons, neutrons, electrons }) => {
       // the only child with children at the moment this function is executed is the atom group.
       let atomChild = scene.children.filter(child => child.children.length > 0)[0]
@@ -232,7 +235,6 @@ const THREECanvas = () => {
           z: 0.01,
           onComplete: () => scene.remove(atomChild)
         })
-      // atomChild
       const atom = new Atom({ scene, protons, neutrons, electrons, atomRadius: 2 }).getAtom()
       scene.add(atom.atomGroup)
       atoms.push(atom)
@@ -302,7 +304,6 @@ const THREECanvas = () => {
     updateContext("switchMolecule", switchMolecule)
 
     // utils
-    updateContext("scene", scene)
     updateContext("clearAtomsAnimated", clearAtomsAnimated)
     updateContext("clearSceneOfGroups", clearSceneOfGroups)
     updateContext("toggleControls", toggleControls)
@@ -311,6 +312,7 @@ const THREECanvas = () => {
     updateContext("adjustCamForMoleculeTl", adjustCamForMoleculeTl)
 
     // SCENE 4  :
+
     class Game {
       constructor() {
         this.group = new THREE.Group()
@@ -341,9 +343,11 @@ const THREECanvas = () => {
       getLink = (atomSize = 2, segments = 8, mat = this.wfMaterial) =>
         new THREE.Mesh(new THREE.CylinderGeometry(atomSize / 5, atomSize / 5, 1, segments, segments, true), mat)
 
-      clickHandler = event => {
+      // handling link creation between atoms : clicking an atom then a second will link them together
+      clickHandler = () => {
         game.raycaster.setFromCamera(this.mousePos, camera)
         let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
+
         for (var i = 0; i < intersects.length; i++) {
           intersects[0].object.material.color.set(0xff0000)
           if (this.selectedAtoms.length === 1) {
@@ -355,6 +359,8 @@ const THREECanvas = () => {
         }
       }
 
+      // adds a link between 2 atoms and creates a molecule object to append to game molecules.
+      // WIP
       connectAtoms = (atom1, atom2) => {
         // let moleculeGroup = new THREE.Group()
         const linkMesh = this.getLink()
@@ -379,24 +385,13 @@ const THREECanvas = () => {
         this.molecules.push(moleculeRaw)
       }
 
-      mouseMoveHandler = event => {
-        this.mousePos.x = (event.clientX / window.innerWidth) * 2 - 1
-        this.mousePos.y = -(event.clientY / window.innerHeight) * 2 + 1
-
-        game.raycaster.setFromCamera(this.mousePos, camera)
-        let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
-        for (var i = 0; i < intersects.length; i++) {}
-      }
-
       listenToEvents = () => {
         this.isRaycasting = true
-        renderer.domElement.addEventListener("mousemove", this.mouseMoveHandler)
         renderer.domElement.addEventListener("click", this.clickHandler)
       }
 
       clearEvents = () => {
         this.isRaycasting = false
-        renderer.domElement.removeEventListener("mousemove", this.mouseMoveHandler)
         renderer.domElement.removeEventListener("click", this.clickHandler)
       }
     }
@@ -427,8 +422,7 @@ const THREECanvas = () => {
 
     const animate = function(t) {
       // keeping molecules links updated
-
-      //
+      // game molecules
       for (let i = 0; i < game.molecules.length; i++) {
         mol.setLinkCoords(
           game.molecules[i].atom1.mesh,
@@ -439,6 +433,7 @@ const THREECanvas = () => {
         )
       }
 
+      // scene 3 molecules
       molecules.forEach(molecule => {
         molecule.links.forEach(link => {
           mol.setLinkCoords(

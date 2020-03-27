@@ -9,7 +9,6 @@ import { Context } from "../../Context"
 
 const UserInterface = () => {
   const { activeScene } = useContext(Context)
-  // console.log(context)
   return (
     <div className="ui">
       <Header />
