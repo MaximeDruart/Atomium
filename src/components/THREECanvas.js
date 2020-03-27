@@ -385,13 +385,24 @@ const THREECanvas = () => {
         this.molecules.push(moleculeRaw)
       }
 
+      mouseMoveHandler = event => {
+        this.mousePos.x = (event.clientX / window.innerWidth) * 2 - 1
+        this.mousePos.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+        game.raycaster.setFromCamera(this.mousePos, camera)
+        let intersects = game.raycaster.intersectObjects(game.elementsToRaycast)
+        for (var i = 0; i < intersects.length; i++) {}
+      }
+
       listenToEvents = () => {
         this.isRaycasting = true
+        renderer.domElement.addEventListener("mousemove", this.mouseMoveHandler)
         renderer.domElement.addEventListener("click", this.clickHandler)
       }
 
       clearEvents = () => {
         this.isRaycasting = false
+        renderer.domElement.removeEventListener("mousemove", this.mouseMoveHandler)
         renderer.domElement.removeEventListener("click", this.clickHandler)
       }
     }
