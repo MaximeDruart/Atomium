@@ -37,10 +37,7 @@ const THREECanvas = () => {
     let rotateCamera = false
 
     const axesHelper = new THREE.AxesHelper(10)
-    scene.add(axesHelper)
-
     const gridHelper = new THREE.GridHelper(100, 100)
-    scene.add(gridHelper)
 
     /**
      * Objects
@@ -284,6 +281,16 @@ const THREECanvas = () => {
       } else controls = null
     }
 
+    const toggleHelp = isTrue => {
+      if (isTrue) {
+        scene.add(axesHelper)
+        scene.add(gridHelper)
+      } else {
+        scene.remove(axesHelper)
+        scene.remove(gridHelper)
+      }
+    }
+
     // passing these functions to context so they can be accessed from the scenes.
 
     // scene transitions
@@ -300,6 +307,7 @@ const THREECanvas = () => {
     updateContext("clearSceneOfGroups", clearSceneOfGroups)
     updateContext("toggleControls", toggleControls)
     updateContext("toggleCube", toggleCube)
+    updateContext("toggleHelp", toggleHelp)
     updateContext("adjustCamForMoleculeTl", adjustCamForMoleculeTl)
 
     // SCENE 4  :

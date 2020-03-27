@@ -4,18 +4,21 @@ import { Context } from "../../Context"
 import "./Scene4.scss"
 
 const Scene4 = () => {
-  const { updateContext, toggleControls, toggleCube, $background, $canvas, game } = useContext(Context)
+  const { updateContext, toggleControls, toggleCube, $background, $canvas, game, toggleHelp } = useContext(Context)
   const $scene4 = useRef(null)
 
   useEffect(() => {
     game.listenToEvents()
     toggleControls(true)
     toggleCube(false)
+    toggleHelp(true)
 
     gsap.from($scene4.current, 0.8, { opacity: 0 })
-    gsap.to($background.current, 0.8, { opacity: 0.4 })
+    gsap.to($background.current, 0.8, { opacity: 0 })
     gsap.set($canvas.current, { zIndex: 10 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => toggleHelp(false)
   }, [])
 
   return (

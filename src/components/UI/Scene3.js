@@ -9,7 +9,15 @@ import gsap from "gsap"
 const Scene3 = () => {
   const $scene3 = useRef(null)
   const [activeMolecule, setActiveMolecule] = useState(0)
-  const { toggleControls, switchMolecule, toggleCube, adjustCamForMoleculeTl } = useContext(Context)
+  const {
+    $background,
+    updateContext,
+    clearSceneOfGroups,
+    toggleControls,
+    switchMolecule,
+    toggleCube,
+    adjustCamForMoleculeTl
+  } = useContext(Context)
   const [activeDescription, setActiveDescription] = useState(0)
 
   const changeMolecule = val => {
@@ -28,8 +36,20 @@ const Scene3 = () => {
     toggleCube(true)
     toggleControls(true)
     gsap.from($scene3.current, 0.8, { opacity: 0 })
+    gsap.to($background.current, 0.8, { opacity: 0.4 })
+
     return () => adjustCamForMoleculeTl(false)
   }, [])
+
+  const goToScene3 = () => {
+    gsap.to($scene3.current, 0.8, {
+      opacity: 0,
+      onStart: () => clearSceneOfGroups(),
+      onComplete: () => {
+        updateContext("activeScene", 3)
+      }
+    })
+  }
 
   return (
     <div ref={$scene3} className="scene-2 scene-3">
@@ -44,6 +64,9 @@ const Scene3 = () => {
           Molécule précédente
         </div>
       )}
+      <div onClick={goToScene3} className="mf-active next buttonNext">
+        Créez !
+      </div>
       {activeMolecule < scene3data.length - 1 && (
         <div onClick={() => changeMolecule(1)} className="mf-active button next-atom next-Molecule">
           Molécule suivante
